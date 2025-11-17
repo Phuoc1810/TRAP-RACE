@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b86ed1aeff84984458d369ef669dd3af
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/Builtin/Game/Characters/Player/Mouth.mat
+  uploadId: 760399

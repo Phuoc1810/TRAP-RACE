@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 21d908b2a734a2e428bc2f9a8a5d2d0d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/URP/Game/Materials/Characters/Fern/Shoes
+    1.mat
+  uploadId: 760399

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 82094b0883d0b8f49b62e9844c030c9f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/Shared/Turntable/DemoAnim.controller
+  uploadId: 760399

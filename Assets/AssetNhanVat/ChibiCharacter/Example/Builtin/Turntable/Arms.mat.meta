@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8ad90542a1ff7594cad46a7e183e9972
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/Builtin/Turntable/Arms.mat
+  uploadId: 760399

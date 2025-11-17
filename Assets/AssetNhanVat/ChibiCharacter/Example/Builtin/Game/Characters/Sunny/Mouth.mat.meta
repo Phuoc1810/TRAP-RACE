@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a82ce22bd24420a4e9e7b52a984224bd
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/Builtin/Game/Characters/Sunny/Mouth.mat
+  uploadId: 760399

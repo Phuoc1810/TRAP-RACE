@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9ca1950711e55214c8214e482617586c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/Shared/Turntable/Scripts/ChangeAnimButton.cs
+  uploadId: 760399

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8c37f70b306796142a831007b9a9c486
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Builtin/Shaders/replaceRGBColors.cginc
+  uploadId: 760399
