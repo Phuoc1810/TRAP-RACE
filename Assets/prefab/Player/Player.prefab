@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2701565055817652571}
   - component: {fileID: 2099227327761155611}
   - component: {fileID: 3409309086563523709}
+  - component: {fileID: 6275981885842061729}
+  - component: {fileID: 8851525186202906655}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -78,6 +80,33 @@ MonoBehaviour:
   yOffset: 1
   exitPoint: {fileID: 0}
   playerAnimator: {fileID: 281895511056838536}
+--- !u!114 &6275981885842061729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120993329749466953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba1ceed05fa73845a317b6aeee5de3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldActive: 0
+  shoesActive: 0
+--- !u!114 &8851525186202906655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120993329749466953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96f32838131f6b34e9c4245951e0158c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSkill: {fileID: 6275981885842061729}
 --- !u!1001 &548470222992153236
 PrefabInstance:
   m_ObjectHideFlags: 0
