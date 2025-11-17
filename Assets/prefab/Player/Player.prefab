@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSkill: {fileID: 6275981885842061729}
+  playerMovement: {fileID: 3409309086563523709}
   animator: {fileID: 6267016123459606312}
 --- !u!1001 &548470222992153236
 PrefabInstance:
