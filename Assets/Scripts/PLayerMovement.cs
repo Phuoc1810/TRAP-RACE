@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections; // Cần cho Coroutine
 using System.Collections.Generic;
-using System.Collections; // Cần cho Coroutine
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
 
     // Cờ (flag) để ngăn chặn các hành động khác khi đã thắng
     private bool hasReachedGoal = false;
+
+    [Header("Animation")]
+    public Animator playerAnimator;
+
     /// <summary>
     /// Hàm này được PathDrawer gọi để bắt đầu di chuyển
     /// </summary>
@@ -56,7 +60,16 @@ public class PlayerMovement : MonoBehaviour
             Vector3 targetPosition = new Vector3(tile.transform.position.x, yOffset, tile.transform.position.z);
             while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
             {
+                //Xoay nhân vật về hướng di chuyển
+                Vector3 direction = (targetPosition - transform.position).normalized;
+                if (direction != Vector3.zero)
+                {
+                    Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
+                }
+
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                playerAnimator.SetFloat("moveSpeed", moveSpeed); // Cập nhật tham số Speed cho Animator
                 yield return null;
             }
             transform.position = targetPosition;
@@ -95,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
         if (!hasReachedGoal)
         {
             isMoving = false;
+            playerAnimator.SetFloat("moveSpeed", 0); // Cập nhật tham số Speed cho Animator
             Debug.Log("Player đã đi hết đường!");
         }
         
@@ -113,6 +127,14 @@ public class PlayerMovement : MonoBehaviour
 
         while (Vector3.Distance(transform.position, exitTarget) > 0.01f)
         {
+            //Xoay nhân vật về hướng di chuyển
+            Vector3 direction = (exitTarget - transform.position).normalized;
+            if (direction != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
+            }
+
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 exitTarget,
@@ -128,5 +150,6 @@ public class PlayerMovement : MonoBehaviour
 
         // === TẮT CỜ isMoving SAU KHI ĐÃ ĐẾN EXIT POINT ===
         isMoving = false;
+        playerAnimator.SetFloat("moveSpeed", 0); // Cập nhật tham số Speed cho Animator
     }
 }
