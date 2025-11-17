@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 219bbc8d411de4f458f6d2ec3bd19278
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/Shared/Turntable/Scripts/RandomizeCharacter.cs
+  uploadId: 760399

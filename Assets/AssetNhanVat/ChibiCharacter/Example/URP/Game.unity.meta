@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: daa01183fa8497e4cbe334b61d0c8bb7
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/URP/Game.unity
+  uploadId: 760399

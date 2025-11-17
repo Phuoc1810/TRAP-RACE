@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 799274cada551aa46b84b8793b3599fd
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Builtin/Shaders/ColorSwapUnlit.shader
+  uploadId: 760399

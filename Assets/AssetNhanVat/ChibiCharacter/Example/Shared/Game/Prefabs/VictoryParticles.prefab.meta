@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 55e06397221f8fc4f900706428ab3500
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/Shared/Game/Prefabs/VictoryParticles.prefab
+  uploadId: 760399

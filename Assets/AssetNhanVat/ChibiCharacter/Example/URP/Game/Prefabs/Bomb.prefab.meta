@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f05ec3f7db4ca424d97fe14a7cf8a0d0
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 313963
+  packageName: Chibi Character
+  packageVersion: 2.0.0
+  assetPath: Assets/ChibiCharacter/Example/URP/Game/Prefabs/Bomb.prefab
+  uploadId: 760399
