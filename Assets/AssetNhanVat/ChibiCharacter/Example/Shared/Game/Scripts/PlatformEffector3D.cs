@@ -25,7 +25,7 @@ namespace ChibiCharacter
         void Update()
         {
             //if player is moving up then player can pass through
-            if (player.velocity.y > 0.1f)
+            if (player.linearVelocity.y > 0.1f)
             {
                 col.enabled = false;
             }

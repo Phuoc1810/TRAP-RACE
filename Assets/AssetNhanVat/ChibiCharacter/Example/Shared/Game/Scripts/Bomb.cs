@@ -66,7 +66,7 @@ namespace ChibiCharacter
             //water slows the the bomb and will prevent it from exploding
             if (other.gameObject.name == "Water")
             {
-                rb.velocity = new Vector3(rb.velocity.x / 5, rb.velocity.y / 5, rb.velocity.z / 5);
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x / 5, rb.linearVelocity.y / 5, rb.linearVelocity.z / 5);
                 gravityScale = 1;
                 inWater = true;
             }

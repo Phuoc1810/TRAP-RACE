@@ -121,7 +121,7 @@ namespace ChibiCharacter
         // Update is called once per frame
         void Update()
         {
-            velocity = rb.velocity;
+            velocity = rb.linearVelocity;
 
             if (health > 0)
             {
@@ -231,7 +231,7 @@ namespace ChibiCharacter
 
             anim.SetFloat("yVelocity", velocity.y);
             //apply the velocity
-            rb.velocity = velocity;
+            rb.linearVelocity = velocity;
             lastInWater = isInWater;
 
             healthText.text = "Health: " + health;
@@ -268,12 +268,12 @@ namespace ChibiCharacter
             if (isFacingRight)
             {
                 currentBomb.transform.position = gameObject.transform.position + new Vector3(2, 3, 0);
-                currentBomb.GetComponent<Rigidbody>().velocity = new Vector3(15, 5);
+                currentBomb.GetComponent<Rigidbody>().linearVelocity = new Vector3(15, 5);
             }
             else
             {
                 currentBomb.transform.position = gameObject.transform.position + new Vector3(-2, 3, 0);
-                currentBomb.GetComponent<Rigidbody>().velocity = new Vector3(-15, 5);
+                currentBomb.GetComponent<Rigidbody>().linearVelocity = new Vector3(-15, 5);
             }
 
         }
@@ -481,7 +481,7 @@ namespace ChibiCharacter
 
             anim.SetFloat("moveSpeed", velocity.y / moveSpeed);
 
-            rb.velocity = velocity;
+            rb.linearVelocity = velocity;
         }
 
         private bool isGrounded()
