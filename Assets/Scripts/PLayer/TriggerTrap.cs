@@ -4,11 +4,12 @@ public class TriggerTrap : MonoBehaviour
 {
     public PlayerSkill playerSkill;
     public Animator animator;
+    private int isDeadHash;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        isDeadHash = Animator.StringToHash("isDead");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,7 +49,7 @@ public class TriggerTrap : MonoBehaviour
 
     public void LoseGame()
     {
-        animator.SetTrigger("isDead");
+        animator.SetBool(isDeadHash, true);
 
         //hiển thị UI thua game
     }

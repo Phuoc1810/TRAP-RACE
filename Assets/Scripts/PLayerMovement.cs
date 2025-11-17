@@ -21,10 +21,18 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Animation")]
     public Animator playerAnimator;
+    private int isMovingHash;
 
     /// <summary>
     /// Hàm này được PathDrawer gọi để bắt đầu di chuyển
     /// </summary>
+    /// 
+
+    private void Start()
+    {
+        isMovingHash = Animator.StringToHash("isMoving");
+    }
+
     public void FollowPath(List<TileInfo> path)
     {
         
@@ -69,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-                playerAnimator.SetFloat("moveSpeed", moveSpeed); // Cập nhật tham số Speed cho Animator
+                playerAnimator.SetBool(isMovingHash, true); // Cập nhật tham số Speed cho Animator
                 yield return null;
             }
             transform.position = targetPosition;
@@ -108,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         if (!hasReachedGoal)
         {
             isMoving = false;
-            playerAnimator.SetFloat("moveSpeed", 0); // Cập nhật tham số Speed cho Animator
+            playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
             Debug.Log("Player đã đi hết đường!");
         }
         
@@ -150,6 +158,6 @@ public class PlayerMovement : MonoBehaviour
 
         // === TẮT CỜ isMoving SAU KHI ĐÃ ĐẾN EXIT POINT ===
         isMoving = false;
-        playerAnimator.SetFloat("moveSpeed", 0); // Cập nhật tham số Speed cho Animator
+        playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
     }
 }
