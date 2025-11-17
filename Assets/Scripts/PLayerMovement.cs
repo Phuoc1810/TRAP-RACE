@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Tốc độ di chuyển của player")]
     public float moveSpeed = 5f;
 
+    Coroutine currentMovementCoroutine;
+
     [Tooltip("Độ cao Y mà player nên đứng (tránh lún xuống sàn)")]
     public float yOffset = 0.5f; // Nếu dùng Plane, có thể là 0.5f (cho Capsule) hoặc 0 (cho Sphere)
 
@@ -45,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         // Reset cờ 'thắng' mỗi khi bắt đầu đường đi mới
         hasReachedGoal = false;
         // Bắt đầu một Coroutine để xử lý việc di chuyển theo tuần tự
-        StartCoroutine(MoveAlongPath(path));
+        currentMovementCoroutine = StartCoroutine(MoveAlongPath(path));
     }
 
     /// <summary>
@@ -95,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
                 // 2. Bắt đầu di chuyển ra 'Điểm Thoát'
                 if (exitPoint != null)
                 {
-                    StartCoroutine(MoveToExitPoint());
+                    currentMovementCoroutine = StartCoroutine(MoveToExitPoint());
                 }
 
                 // 3. THAO TÁC CỰC KỲ QUAN TRỌNG:
@@ -159,5 +161,16 @@ public class PlayerMovement : MonoBehaviour
         // === TẮT CỜ isMoving SAU KHI ĐÃ ĐẾN EXIT POINT ===
         isMoving = false;
         playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
+    }
+
+    public void StopMovement()
+    {
+        if (currentMovementCoroutine != null)
+        {
+            StopCoroutine(currentMovementCoroutine);
+            currentMovementCoroutine = null;
+        }
+        isMoving = false;
+        //playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
     }
 }
