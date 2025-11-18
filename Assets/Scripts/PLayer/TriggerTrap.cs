@@ -23,7 +23,7 @@ public class TriggerTrap : MonoBehaviour
             if (playerSkill.shieldActive)//nếu có khiên thì không sao
             {
                 Debug.Log("Nhân vật có khiên");
-                playerSkill.shieldActive = false;
+                playerSkill.DeActivateShield();
             }
             else
             {

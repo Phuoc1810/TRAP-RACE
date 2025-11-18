@@ -21,7 +21,7 @@ public class SkillManager : MonoBehaviour
         {
             if (currentSkill == "Shield")
             {
-                playerSkill.shieldActive = true;
+                playerSkill.ActivateShield();
             }
             else if (currentSkill == "Shoes")
             {
