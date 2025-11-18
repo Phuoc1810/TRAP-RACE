@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3983125353956643046}
   - component: {fileID: 2626040599062096400}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SpawnArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 6329779268385911484}
   - component: {fileID: 150345177166950519}
   - component: {fileID: 3936151957252379363}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bayda
   m_TagString: BayDa
   m_Icon: {fileID: 0}

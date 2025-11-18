@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4349164581226430482}
   - component: {fileID: 3156521672383624784}
   - component: {fileID: 6247614209341423633}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Props_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 8146946141964515426}
   - component: {fileID: 7402643657231718525}
   - component: {fileID: 8879532417870201629}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Props_2a
   m_TagString: Untagged
   m_Icon: {fileID: 0}

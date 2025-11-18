@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8851525186202906655}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,6 +94,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shieldActive: 0
   shoesActive: 0
+  helmet: {fileID: 0}
+  helmetVisor: {fileID: 0}
 --- !u!114 &8851525186202906655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +291,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f117e18d31834094b9c6a43485c83078, type: 3}
       propertyPath: m_Name
       value: Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f117e18d31834094b9c6a43485c83078, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
