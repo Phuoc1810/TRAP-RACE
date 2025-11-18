@@ -694,6 +694,11 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1298309100 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4927796819201522140, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
+  m_PrefabInstance: {fileID: 3846530581745324423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1354392287
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,6 +976,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1857699504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4009223824011239958, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
+  m_PrefabInstance: {fileID: 3846530581745324423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3846530581745324423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1031,10 +1041,26 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4009223824011239958, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4927796819201522140, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5120993329749466953, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6275981885842061729, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
+      propertyPath: helmet
+      value: 
+      objectReference: {fileID: 1857699504}
+    - target: {fileID: 6275981885842061729, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
+      propertyPath: helmetVisor
+      value: 
+      objectReference: {fileID: 1298309100}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
