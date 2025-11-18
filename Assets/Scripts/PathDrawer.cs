@@ -157,7 +157,11 @@ public class PathDrawer : MonoBehaviour
     TileInfo GetTileUnderMouse()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+
+        int layerToIgnore = 1 << LayerMask.NameToLayer("Trap");
+        int layerMask = ~layerToIgnore; // lấy tất cả layer trừ layer này
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f,layerMask))
         {
             if (hit.collider.CompareTag("LandTile") || hit.collider.CompareTag("FinishLine") || hit.collider.CompareTag("GoalTouch"))
             {

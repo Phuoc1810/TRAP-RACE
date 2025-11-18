@@ -18,7 +18,7 @@ public class TriggerTrap : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Xử lý va chạm với bẫy
-        if (other.CompareTag("Respawn"))//Bẫy rơi // || other.CompareTag("Bẫy búa"))
+        if (other.CompareTag("BayDa") || other.CompareTag("BayBua"))//Bẫy rơi // || other.CompareTag("Bẫy búa"))
         {
             if (playerSkill.shieldActive)//nếu có khiên thì không sao
             {
@@ -32,7 +32,7 @@ public class TriggerTrap : MonoBehaviour
                 LoseGame();
             }
         }
-        else if (other.CompareTag("Finish"))//Bẫy gai
+        else if (other.CompareTag("BayGai"))//Bẫy gai
         {
             if (playerSkill.shoesActive)//nếu có giày thép gai thì không sao
             {
