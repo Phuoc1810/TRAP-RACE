@@ -6,7 +6,15 @@ public class SkillManager : MonoBehaviour
     private bool skillSelected = false;
 
     public PlayerSkill playerSkill;
+    [SerializeField] private SkillPanelUI skillPanelUI;
 
+    private void Update()
+    {
+        if (skillSelected)
+        {
+            skillPanelUI.HidePanel();
+        }
+    }
     public void SelecterSkill(string skillName)
     {
         if(skillSelected)
