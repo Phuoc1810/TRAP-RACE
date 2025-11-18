@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &828223372314123552
 Transform:
   m_ObjectHideFlags: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.49, y: 2.2, z: -2.42}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 0.4498074, y: 2, z: 0.4843221}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8146946141964515426}
@@ -125,8 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d237c809678f61e41919c469230bb9e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hiddenY: 1.2
-  shownY: 2.2
+  hiddenY: -0.74
+  shownY: 0.3
   moveSpeed: 5
 --- !u!1 &8346068776530560137
 GameObject:
@@ -139,9 +139,10 @@ GameObject:
   - component: {fileID: 8146946141964515426}
   - component: {fileID: 7402643657231718525}
   - component: {fileID: 8879532417870201629}
+  - component: {fileID: 5558831783772451387}
   m_Layer: 3
   m_Name: Props_2a
-  m_TagString: Untagged
+  m_TagString: BayGai
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -214,3 +215,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5558831783772451387
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346068776530560137}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
