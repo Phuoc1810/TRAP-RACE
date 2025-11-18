@@ -2,19 +2,23 @@
 
 public class TriggerTrap : MonoBehaviour
 {
+    [Header("Reference")]
     public PlayerSkill playerSkill;
+    public PlayerMovement playerMovement;
+
     public Animator animator;
+    private int isDeadHash;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        isDeadHash = Animator.StringToHash("isDead");
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //Xử lý va chạm với bẫy
-        if (other.CompareTag("Bẫy rơi"))// || other.CompareTag("Bẫy búa"))
+        if (other.CompareTag("Respawn"))//Bẫy rơi // || other.CompareTag("Bẫy búa"))
         {
             if (playerSkill.shieldActive)//nếu có khiên thì không sao
             {
@@ -27,7 +31,7 @@ public class TriggerTrap : MonoBehaviour
                 LoseGame();
             }
         }
-        else if (other.CompareTag("Bẫy gai"))
+        else if (other.CompareTag("Finish"))//Bẫy gai
         {
             if (playerSkill.shoesActive)//nếu có giày thép gai thì không sao
             {
@@ -48,8 +52,8 @@ public class TriggerTrap : MonoBehaviour
 
     public void LoseGame()
     {
-        animator.SetTrigger("isDead");
-
+        animator.SetBool(isDeadHash, true);
+        playerMovement.StopMovement();
         //hiển thị UI thua game
     }
 }
