@@ -23,6 +23,7 @@ public class TriggerTrap : MonoBehaviour
             if (playerSkill.shieldActive)//nếu có khiên thì không sao
             {
                 Debug.Log("Nhân vật có khiên");
+                playerSkill.shieldActive = false;
             }
             else
             {
@@ -36,6 +37,7 @@ public class TriggerTrap : MonoBehaviour
             if (playerSkill.shoesActive)//nếu có giày thép gai thì không sao
             {
                 Debug.Log("Nhân vật có giày thép gai");
+                playerSkill.shoesActive = false;
             }
             else
             {
