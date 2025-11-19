@@ -66,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         // 2. Reset trạng thái
         hasReachedGoal = false;
         isMoving = true;
+        playerAnimator.SetBool(isMovingHash, true); // Cập nhật tham số Speed cho Animator
 
         // 3. Bắt đầu quá trình di chuyển bằng hàm điều phối
         MoveToNextTile();
@@ -78,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator MoveAlongPath(Vector3 targetPosition)
     {
         isMoving = true;
+        playerAnimator.SetBool(isMovingHash, true); // Cập nhật tham số Speed cho Animator
 
         // Đảm bảo trục Y khớp để không bị lún hoặc bay lên
         targetPosition.y = transform.position.y;
@@ -100,6 +102,14 @@ public class PlayerMovement : MonoBehaviour
         // Vòng lặp di chuyển bình thường
         while (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {
+            //Nhân vật luôn hướng về phía di chuyển
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            if (direction != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
+            }
+
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
@@ -118,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
         if (currentPathIndex >= path.Count) // Đã đi hết path
         {
             isMoving = false;
+            playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
             return;
         }
 
@@ -147,13 +158,22 @@ public class PlayerMovement : MonoBehaviour
         // ... (Logic di chuyển đến ExitPoint giữ nguyên) ...
         while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
         {
+            //Nhân vật luôn hướng về phía di chuyển
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            if (direction != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
+            }
+
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
         
         transform.position = targetPosition;
         isMoving = false;
-        
+        playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
+
         // KÍCH HOẠT CHUYỂN CẤP ĐỘ
         if (gridManager != null)
         {
@@ -172,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
             currentMovementCoroutine = null;
         }
         isMoving = false;
-        //playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
+        playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
     }
     
 }
