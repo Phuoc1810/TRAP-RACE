@@ -1,49 +1,111 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class RockTrap : MonoBehaviour
 {
-    public GameObject[] rockPrefabs;   // danh sách đá có thể rơi
-    public Transform tramDorm;         // vị trí tram dorm nơi đá sẽ rơi
-    public int rockCount = 1;          // số lượng đá rơi
-    public float spawnHeightY = 9f;    // height Y nơi đá rơi xuống
-    public float delayPerRock = 0.1f;  // thời gian giữa mỗi viên đá
+    [Header("Cài đặt bẫy")]
+    public Vector3 rockSpawnOffset = new Vector3(0, 9, 0);
+    public float fallSpeed = 5f;
+    public float destroyDelay = 3f;
+    public GameObject rockPrefab;
 
-    private bool activated = false;
+    private GameObject currentRock;
+    private bool isRockFalling = false;
+    private BoxCollider triggerCollider;
+    private float lastActivationTime = -10f; // Thời gian kích hoạt cuối
+    private float activationCooldown = 0.5f; // Thời gian chờ giữa các lần kích hoạt
 
-    private void OnTriggerEnter(Collider other)
+    void Start()
     {
-        if (!activated && other.CompareTag("Player"))
+        triggerCollider = GetComponent<BoxCollider>();
+        if (triggerCollider == null)
         {
-            activated = true;
-            StartCoroutine(SpawnRocks());
+            triggerCollider = gameObject.AddComponent<BoxCollider>();
+        }
+        triggerCollider.isTrigger = true;
+    }
+
+    void Update()
+    {
+        if (isRockFalling && currentRock != null)
+        {
+            UpdateRockFall();
         }
     }
 
-    private IEnumerator SpawnRocks()
+    void OnTriggerEnter(Collider other)
     {
-        for (int i = 0; i < rockCount; i++)
+        // Kiểm tra cooldown và trạng thái hiện tại
+        if (other.CompareTag("Player") &&
+            !isRockFalling &&
+            Time.time - lastActivationTime > activationCooldown)
         {
-            // Chọn prefab ngẫu nhiên
-            GameObject rock = rockPrefabs[Random.Range(0, rockPrefabs.Length)];
-
-            // Lấy vị trí của tram dorm
-            Vector3 spawnPos = tramDorm.position;
-
-            // Set chiều cao Y = spawnHeightY
-            spawnPos.y = spawnHeightY;
-
-            // Tạo đá và bắt đầu coroutine xóa sau 2 giây
-            GameObject rockInstance = Instantiate(rock, spawnPos, Quaternion.identity);
-            StartCoroutine(DestroyRockAfterDelay(rockInstance, 3f));
-
-            yield return new WaitForSeconds(delayPerRock);
+            Debug.Log("Kích hoạt bẫy - chỉ 1 cục đá được tạo");
+            lastActivationTime = Time.time;
+            ActivateTrap();
         }
     }
 
-    private IEnumerator DestroyRockAfterDelay(GameObject rock, float delay)
+    void ActivateTrap()
     {
-        yield return new WaitForSeconds(delay);
-        Destroy(rock);
+        isRockFalling = true;
+
+        // Tạo cục đá ở vị trí phía trên trap
+        Vector3 spawnPosition = transform.position + rockSpawnOffset;
+
+        if (rockPrefab != null)
+        {
+            currentRock = Instantiate(rockPrefab, spawnPosition, Quaternion.identity);
+        }
+        else
+        {
+            currentRock = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            currentRock.transform.position = spawnPosition;
+            currentRock.name = "FallingRock";
+        }
+
+        Debug.Log("Đã tạo 1 cục đá tại: " + spawnPosition);
+        StartCoroutine(DestroyRockAfterDelay());
+    }
+
+    void UpdateRockFall()
+    {
+        currentRock.transform.Translate(Vector3.down * fallSpeed * Time.deltaTime, Space.World);
+
+        if (currentRock.transform.position.y <= transform.position.y)
+        {
+            Vector3 landedPosition = currentRock.transform.position;
+            landedPosition.y = transform.position.y;
+            currentRock.transform.position = landedPosition;
+        }
+    }
+
+    IEnumerator DestroyRockAfterDelay()
+    {
+        yield return new WaitForSeconds(destroyDelay);
+
+        if (currentRock != null)
+        {
+            Destroy(currentRock);
+            currentRock = null;
+            isRockFalling = false;
+            Debug.Log("Đã xóa cục đá");
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (triggerCollider != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.matrix = transform.localToWorldMatrix;
+            Gizmos.DrawWireCube(triggerCollider.center, triggerCollider.size);
+        }
+
+        Gizmos.color = Color.yellow;
+        Gizmos.matrix = Matrix4x4.identity;
+        Vector3 spawnPosition = transform.position + rockSpawnOffset;
+        Gizmos.DrawWireSphere(spawnPosition, 0.5f);
+        Gizmos.DrawLine(transform.position, spawnPosition);
     }
 }
