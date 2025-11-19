@@ -134,7 +134,7 @@ public class GridManager : MonoBehaviour
         if (lastGridTile != null)
         {
             // FinishLine được đặt dựa trên vị trí của Tile cuối cùng đã dịch chuyển
-            Vector3 exitOffset = new Vector3(spacing, 0, 0);
+            Vector3 exitOffset = new Vector3(0, 0, spacing);
             Vector3 finishPosition = lastGridTile.transform.position + exitOffset;
 
             GameObject finishLine = Instantiate(landTilePrefab, finishPosition, Quaternion.identity, transform);
