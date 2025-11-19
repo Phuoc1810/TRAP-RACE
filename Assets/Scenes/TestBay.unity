@@ -603,6 +603,11 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!4 &1672241880 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3983125353956643046, guid: eea261784435ba74cabb21124eb7eddb, type: 3}
+  m_PrefabInstance: {fileID: 1150518404799142999}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1711077793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -679,6 +684,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2626040599062096400, guid: eea261784435ba74cabb21124eb7eddb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936151957252379363, guid: eea261784435ba74cabb21124eb7eddb, type: 3}
+      propertyPath: tramDorm
+      value: 
+      objectReference: {fileID: 1672241880}
     - target: {fileID: 6329779268385911484, guid: eea261784435ba74cabb21124eb7eddb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.87

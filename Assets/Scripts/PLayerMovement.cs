@@ -1,9 +1,12 @@
 ﻿using System.Collections; // Cần cho Coroutine
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public float PlayerYOffset=0.5f;
     [Tooltip("Tốc độ di chuyển của player")]
     public float moveSpeed = 5f;
 
@@ -25,143 +28,161 @@ public class PlayerMovement : MonoBehaviour
     public Animator playerAnimator;
     private int isMovingHash;
 
+    public GridManager gridManager;
+    private List<TileInfo> path = new List<TileInfo>();
+    private int currentPathIndex = 0;
     /// <summary>
     /// Hàm này được PathDrawer gọi để bắt đầu di chuyển
     /// </summary>
     /// 
+    public void StartMovement(List<TileInfo> newPath)
+    {
+        if (isMoving) return;
+        path = newPath;
+        currentPathIndex = 0;
+
+        if (path.Count > 0)
+        {
+            // Bắt đầu di chuyển từ ô đầu tiên trong danh sách
+            MoveToNextTile();
+        }
+    }
 
     private void Start()
     {
         isMovingHash = Animator.StringToHash("isMoving");
     }
 
+   
     public void FollowPath(List<TileInfo> path)
     {
-        
-        // Nếu đang di chuyển, HOẶC đã thắng rồi, không nhận lệnh mới
-        if (isMoving || hasReachedGoal)
-        {
-            return;
-        }
+        // Kiểm tra điều kiện dừng: đã di chuyển hoặc đã đạt mục tiêu
+        if (isMoving || hasReachedGoal) return;
 
-        // Reset cờ 'thắng' mỗi khi bắt đầu đường đi mới
+        // 1. Lưu đường đi mới vào biến nội bộ của class (tôi dùng 'this.path' để đảm bảo)
+        this.path = path;
+        this.currentPathIndex = 0; // Đảm bảo index bắt đầu từ 0
+
+        // 2. Reset trạng thái
         hasReachedGoal = false;
-        // Bắt đầu một Coroutine để xử lý việc di chuyển theo tuần tự
-        currentMovementCoroutine = StartCoroutine(MoveAlongPath(path));
+        isMoving = true;
+        playerAnimator.SetBool(isMovingHash, true); // Cập nhật tham số Speed cho Animator
+
+        // 3. Bắt đầu quá trình di chuyển bằng hàm điều phối
+        MoveToNextTile();
     }
 
-    /// <summary>
-    /// Coroutine xử lý việc di chuyển mượt mà qua từng ô
-    /// </summary>
-    private IEnumerator MoveAlongPath(List<TileInfo> path)
+
+
+
+
+    private IEnumerator MoveAlongPath(Vector3 targetPosition)
     {
         isMoving = true;
+        playerAnimator.SetBool(isMovingHash, true); // Cập nhật tham số Speed cho Animator
 
-        foreach (TileInfo tile in path)
+        // Đảm bảo trục Y khớp để không bị lún hoặc bay lên
+        targetPosition.y = transform.position.y;
+
+        float stoppingDistance = 0.01f;
+
+        // * KHẮC PHỤC LỖI STACK OVERFLOW QUAN TRỌNG *
+        // Nếu Player đã ở vị trí đích (hoặc rất gần) ngay từ đầu, Coroutine sẽ bị nhảy qua
+        // và gọi hàm tiếp theo mà không đợi một frame nào, gây lỗi Stack Overflow.
+        if (Vector3.Distance(transform.position, targetPosition) < stoppingDistance)
         {
-            if (tile == null)
-            {
-                Debug.LogWarning("Ô tiếp theo đã bị hủy. Dừng di chuyển!");
-                break;
-            }
+            // Yield một lần để cho phép Unity chạy các Coroutine khác và phá vỡ chuỗi đệ quy
+            yield return null;
 
-            // ... (code di chuyển MoveTowards vẫn như cũ) ...
-
-            Vector3 targetPosition = new Vector3(tile.transform.position.x, yOffset, tile.transform.position.z);
-            while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
-            {
-                //Xoay nhân vật về hướng di chuyển
-                Vector3 direction = (targetPosition - transform.position).normalized;
-                if (direction != Vector3.zero)
-                {
-                    Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
-                }
-
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-                playerAnimator.SetBool(isMovingHash, true); // Cập nhật tham số Speed cho Animator
-                yield return null;
-            }
-            transform.position = targetPosition;
-
-
-            // (Sau khi đã đến ô 'tile')
-
-            // 1. Kiểm tra xem ô này có phải Vạch Đích không?
-           
-            if (tile.CompareTag("FinishLine"))
-            {
-                Debug.Log("HOÀN THÀNH! Đã đến vạch đích!");
-                hasReachedGoal = true;
-
-                // 2. Bắt đầu di chuyển ra 'Điểm Thoát'
-                if (exitPoint != null)
-                {
-                    currentMovementCoroutine = StartCoroutine(MoveToExitPoint());
-                }
-
-                // 3. THAO TÁC CỰC KỲ QUAN TRỌNG:
-                // Lệnh 'break' phải được gọi để NGỪNG VÒNG LẶP FOREACH
-                // ngay lập tức, nếu không, Coroutine sẽ cố gắng đi đến ô tiếp theo
-                // trong đường dẫn đã vẽ (path) và ngăn MoveToExitPoint() hoàn thành.
-                break;
-            }
-
-            // (logic bẫy, nên nằm ở đây)
-
-
+            // Tiếp tục đi đến ô tiếp theo
+            MoveToNextTile();
+            yield break; // Kết thúc Coroutine này
         }
 
-     
-        // Chỉ đặt 'isMoving = false' nếu KHÔNG đi đến vạch đích
-        // (Nếu đến vạch đích, coroutine 'MoveToExitPoint' sẽ xử lý việc này)
-        if (!hasReachedGoal)
+        // Vòng lặp di chuyển bình thường
+        while (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {
-            isMoving = false;
-            playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
-            Debug.Log("Player đã đi hết đường!");
-        }
-        
-    }
-    // === DÁN COROUTINE MỚI NÀY VÀO CUỐI SCRIPT ===
-
-    /// <summary>
-    /// Coroutine tự động di chuyển player ra khỏi màn
-    /// </summary>
-    private IEnumerator MoveToExitPoint()
-    {
-        Debug.Log("Bắt đầu di chuyển ra điểm thoát...");
-
-        // Đảm bảo Y offset chính xác cho điểm thoát
-        Vector3 exitTarget = new Vector3(exitPoint.position.x, yOffset, exitPoint.position.z);
-
-        while (Vector3.Distance(transform.position, exitTarget) > 0.01f)
-        {
-            //Xoay nhân vật về hướng di chuyển
-            Vector3 direction = (exitTarget - transform.position).normalized;
+            //Nhân vật luôn hướng về phía di chuyển
+            Vector3 direction = (targetPosition - transform.position).normalized;
             if (direction != Vector3.zero)
             {
                 Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
             }
 
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                exitTarget,
-                moveSpeed * Time.deltaTime
-            );
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
 
-        // Đảm bảo đến đúng vị trí
-        transform.position = exitTarget;
+        // Đảm bảo dừng chính xác
+        transform.position = targetPosition;
 
-        Debug.Log("Đã thoát!");
+        // Tiếp tục di chuyển đến ô kế tiếp
+        MoveToNextTile();
+    }
 
-        // === TẮT CỜ isMoving SAU KHI ĐÃ ĐẾN EXIT POINT ===
+
+    private void MoveToNextTile()
+    {
+        // === KIỂM TRA ĐIỀU KIỆN DỪNG HOẶC CHUYỂN TIẾP ===
+        if (currentPathIndex >= path.Count) // Đã đi hết path
+        {
+            isMoving = false;
+            playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
+            return;
+        }
+
+        TileInfo nextTile = path[currentPathIndex];
+
+        // KIỂM TRA TỰ ĐỘNG CHUYỂN TIẾP (Chạm FinishLine)
+        if (nextTile != null && nextTile.gameObject.CompareTag("FinishLine"))
+        {
+            GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
+
+            if (exitPoint != null)
+            {
+                StopAllCoroutines();
+                currentMovementCoroutine = StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
+
+                path.Clear();
+                return;
+            }
+        }
+
+        // Di chuyển bình thường
+        currentMovementCoroutine = StartCoroutine(MoveAlongPath(nextTile.transform.position));
+        currentPathIndex++; // Chỉ tăng index sau khi gọi thành công MoveAlongPath
+    }
+    private IEnumerator MoveToExitPoint(Vector3 targetPosition)
+    {
+        // ... (Logic di chuyển đến ExitPoint giữ nguyên) ...
+        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+        {
+            //Nhân vật luôn hướng về phía di chuyển
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            if (direction != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
+            }
+
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        
+        transform.position = targetPosition;
         isMoving = false;
         playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
+
+        // KÍCH HOẠT CHUYỂN CẤP ĐỘ
+        if (gridManager != null)
+        {
+            // Reset vị trí Player về (0, Y_offset, 0) của map mới
+            transform.position = new Vector3(1, PlayerYOffset, -1); 
+            gridManager.StartNextLevel();
+        }
     }
+
 
     public void StopMovement()
     {
@@ -171,6 +192,7 @@ public class PlayerMovement : MonoBehaviour
             currentMovementCoroutine = null;
         }
         isMoving = false;
-        //playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
+        playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
     }
+    
 }

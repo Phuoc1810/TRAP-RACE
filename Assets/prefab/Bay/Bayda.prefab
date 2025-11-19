@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 777012746976403676}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.4, z: 0}
+  m_LocalPosition: {x: 0.34, y: 5.4, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -106,8 +106,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.6807605, y: 1.5881693, z: 4.0062027}
-  m_Center: {x: -0.34038025, y: 0.29408467, z: -0.148772}
+  m_Size: {x: 2.5218956, y: 3.2326083, z: 2.8808062}
+  m_Center: {x: 0.08018732, y: -0.52813375, z: 0.021213805}
 --- !u!114 &3936151957252379363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rockPrefabs:
   - {fileID: 7505324163579992151, guid: 167742c9202c0fd4da31d23fa9992363, type: 3}
-  spawnArea: {fileID: 3983125353956643046}
+  tramDorm: {fileID: 3983125353956643046}
   rockCount: 1
   spawnHeightY: 9
   delayPerRock: 0.2

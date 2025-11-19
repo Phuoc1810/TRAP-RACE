@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic; // Cần dùng cho List
-
+using System.Collections;
 public class GridManager : MonoBehaviour
 {
     [Header("Grid Settings")]
@@ -27,6 +27,7 @@ public class GridManager : MonoBehaviour
     public GameObject trapPrefab;   // Prefab cho cái bẫy
     public int numberOfTraps = 2;  // Số lượng bẫy cần spawn
     public float trapYOffset = 0.5f; // Độ cao Y để bẫy không bị lún
+    public List<Vector2Int> trapPositions = new List<Vector2Int>();
 
     [Header("Game Logic")]
     [Tooltip("Tọa độ (X, Z) của ô vạch đích")]
@@ -36,6 +37,10 @@ public class GridManager : MonoBehaviour
     [Tooltip("Xác suất một ô được spawn.")]
     [Range(0.1f, 1f)]
     public float spawnChance = 0.9f;
+    [Header("References")]
+    public Camera mainCamera;
+    public PlayerMovement playerMovement;
+   
 
     void Start()
     {
@@ -54,6 +59,10 @@ public class GridManager : MonoBehaviour
 
         SpawnGrid(); // Hàm này sẽ spawn cả lưới và 1 ô đích dư ra
         SpawnRandomTraps();
+        if (playerMovement != null)
+        {
+            playerMovement.gridManager = this;
+        }
     }
 
     void SpawnGrid()
@@ -64,7 +73,7 @@ public class GridManager : MonoBehaviour
         gridArray = new GameObject[width, height];
         GameObject goalTouchTile = null;
 
-
+        GameObject lastGridTile = null;
 
         if (landTilePrefab == null)
         {
@@ -95,29 +104,23 @@ public class GridManager : MonoBehaviour
                 // 1. Kiểm tra Goal Tile
 
 
-                bool isGoalTouchPoint = (x == goalCoordinates.x && z == goalCoordinates.y);
+                bool isLastTile = (x == width - 1 && z == height - 1);
 
                 Vector3 position = new Vector3(x * spacing, 0, z * spacing);
                 GameObject newTile = Instantiate(landTilePrefab, position, Quaternion.identity, transform);
                 newTile.name = $"Tile ({x}, {z})";
 
                 TileInfo tileInfo = newTile.GetComponent<TileInfo>();
-                if (tileInfo != null)
-                {
-                    tileInfo.SetCoords(x, z);
-                    tileInfo.originalColor = newTile.GetComponent<Renderer>().material.color;
-                }
+                if (tileInfo == null) tileInfo = newTile.AddComponent<TileInfo>();
 
-                // Gán Tag cho Ô Chạm Đích (Goal Touch Point)
-                if (isGoalTouchPoint)
+                tileInfo.SetCoords(x, z);
+                tileInfo.originalColor = newTile.GetComponent<Renderer>().material.color;
+
+                newTile.tag = "LandTile"; // <-- TẤT CẢ TILE TRONG LƯỚI ĐỀU LÀ LandTile
+
+                if (isLastTile)
                 {
-                    newTile.tag = "GoalTouch"; // Ô cuối cùng của đường đi
-                   
-                    goalTouchTile = newTile; // Lưu lại ô này
-                }
-                else
-                {
-                    newTile.tag = "LandTile";
+                    lastGridTile = newTile;
                 }
 
                 gridArray[x, z] = newTile;
@@ -125,29 +128,19 @@ public class GridManager : MonoBehaviour
 
 
                 // 2. SPAWN 1 Ô ĐÍCH DUY NHẤT (Vạch đích thực sự)
-                if (goalTouchTile != null)
+                if (lastGridTile != null)
                 {
-                    // Tính toán vị trí dư ra 1 ô (Offset 1 đơn vị spacing theo trục X)
                     Vector3 exitOffset = new Vector3(0, 0, spacing);
-                    Vector3 exitPosition = goalTouchTile.transform.position + exitOffset;
+                    Vector3 finishPosition = lastGridTile.transform.position + exitOffset;
 
-                    GameObject finishLine = Instantiate(landTilePrefab, exitPosition, Quaternion.identity, transform);
+                    GameObject finishLine = Instantiate(landTilePrefab, finishPosition, Quaternion.identity, transform);
                     finishLine.name = "FINISH LINE (Extra Tile)";
-                    finishLine.tag = "FinishLine"; // Tag vạch đích cuối cùng
+                    finishLine.tag = "FinishLine"; // <-- Ô DƯ RA LÀ FinishLine
                     finishLine.GetComponent<Renderer>().material.color = Color.blue;
 
-                    gridArray[x, z] = newTile;
-
-                    if (tileInfo != null)
-                    {
-                        tileInfo.SetCoords(x, z);
-                        // Lưu lại màu gốc
-                        tileInfo.originalColor = newTile.GetComponent<Renderer>().material.color;
-                    }
-                    else
-                    {
-                        Debug.LogError($"Prefab {landTilePrefab.name} thiếu script TileInfo!");
-                    }
+                    TileInfo finishInfo = finishLine.GetComponent<TileInfo>();
+                    if (finishInfo == null) finishInfo = finishLine.AddComponent<TileInfo>();
+                    finishInfo.SetCoords(-1, -1);
 
 
 
@@ -229,6 +222,7 @@ public class GridManager : MonoBehaviour
         if (foundValidPlacement)
         {
             Debug.Log($"Đã tìm thấy vị trí đặt bẫy hợp lệ. Đang spawn {trapsToSpawn} bẫy.");
+            trapPositions = new List<Vector2Int>(chosenTrapLocations);// Lưu lại vị trí bẫy đã chọn
             foreach (Vector2Int pos in chosenTrapLocations)
             {
                 GameObject tile = gridArray[pos.x, pos.y];
@@ -301,6 +295,59 @@ public class GridManager : MonoBehaviour
 
         // So sánh số ô có thể đến được với tổng số ô trống
         return reachableNonTrapTiles == totalNonTrapTiles;
+    }
+    public void StartNextLevel()
+    {
+        // 1. PHÁ HỦY MAP CŨ và ExitPoint thủ công
+        DestroyCurrentGrid();
+
+        // 2. RESET TẠO MAP MỚI
+        gridArray = null;
+        // Đảm bảo spawnPositions được khởi tạo lại hoặc Clear nếu nó là List
+        // Nếu bạn khai báo nó là List<Vector3> spawnPositions = new List<Vector3>(); 
+        // thì dùng spawnPositions.Clear();
+
+        Start(); // Gọi lại Start() để spawn grid mới
+
+        // 3. KÉO CAMERA TỚI VỊ TRÍ MỚI
+        if (mainCamera != null)
+        {
+            Vector3 newCenter = new Vector3((width - 1) * spacing / 2f,
+                                            mainCamera.transform.position.y,
+                                            (height - 1) * spacing / 2f);
+
+            StartCoroutine(MoveCameraSmoothly(newCenter));
+        }
+    }
+
+    void DestroyCurrentGrid()
+    {
+        // Hủy tất cả các tile (con của GridManager)
+        int childs = transform.childCount;
+        for (int i = childs - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        // Hủy ExitPoint (Cube thủ công)
+        GameObject exit = GameObject.FindGameObjectWithTag("ExitPoint");
+        //if (exit != null) Destroy(exit);
+    }
+
+    IEnumerator MoveCameraSmoothly(Vector3 targetCenter)
+    {
+        float duration = 1.5f;
+        float elapsed = 0f;
+        Vector3 startPosition = mainCamera.transform.position;
+        targetCenter.y = startPosition.y;
+
+        while (elapsed < duration)
+        {
+            mainCamera.transform.position = Vector3.Lerp(startPosition, targetCenter, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.transform.position = targetCenter;
     }
 }
 

@@ -56,5 +56,10 @@ public class HammerTrap : MonoBehaviour
 
             yield return null;
         }
+        // Sau khi xoay xong, đợi 3 giây rồi xóa cây búa
+        yield return new WaitForSeconds(1f);
+
+        if (hammerMesh != null)
+            Destroy(hammerMesh);
     }
 }
