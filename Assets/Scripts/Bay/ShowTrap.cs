@@ -33,6 +33,7 @@ public class ShowTrap : MonoBehaviour
             trapSprite = Instantiate(spikeTrapSprite, trapPos.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
         }
 
+        trapSprite.transform.localScale = Vector3.zero;
         return trapSprite;
     }
 
@@ -43,10 +44,20 @@ public class ShowTrap : MonoBehaviour
 
     public IEnumerator ShowAllTrap()
     {
+        //Show text
+        countDownShowTrapText.gameObject.SetActive(true);
+        countDownShowTrapText.text = "Traps will be hidden in: " + countDownTime;
+        countDownShowTrapText.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        // Scale up animation
+        StartCoroutine(ScaleText(Vector3.one));
+
+
         List<GameObject> trapSprites = new List<GameObject>();
         foreach (Vector2Int trapPos in gridManager.trapPositions)
         { 
             GameObject trapSprite = ShowTrapAt(trapPos.x, trapPos.y);
+            // Scale up animation
+            StartCoroutine(ScaleSprite(trapSprite, Vector3.one));
 
             ////Xoay sprite về hướng camera
             if (trapSprite != null)
@@ -70,9 +81,45 @@ public class ShowTrap : MonoBehaviour
         // Hide all trap sprites
         foreach (GameObject trapSprite in trapSprites)
         {
-            Destroy(trapSprite);
+            // Scale down animation
+            StartCoroutine(ScaleSprite(trapSprite, Vector3.zero));
         }
         currentTime = 0;
+        yield return StartCoroutine(ScaleText(new Vector3(0.5f, 0.5f, 0.5f)));
         countDownShowTrapText.text = "";
+        countDownShowTrapText.gameObject.SetActive(false);
+
+        foreach (GameObject trapSprite in trapSprites)
+        {
+            Destroy(trapSprite);
+        }
+    }
+
+    public IEnumerator ScaleSprite(GameObject sprite, Vector3 targetScale)
+    {
+        Vector3 originalScale = sprite.transform.localScale;
+        float duration = 0.15f;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            sprite.transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        sprite.transform.localScale = targetScale;
+    }
+
+    public IEnumerator ScaleText(Vector3 targetScale)
+    { 
+        Vector3 originalScale = countDownShowTrapText.transform.localScale;
+        float duration = 0.15f;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            countDownShowTrapText.transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        countDownShowTrapText.transform.localScale = targetScale;
     }
 }
