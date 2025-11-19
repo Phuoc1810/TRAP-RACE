@@ -42,7 +42,8 @@ public class SkillPanelUI : MonoBehaviour
     {
         Vector2 targetPos = Vector2.Lerp(skillPanel.anchoredPosition, hiddenPos, speedPosition);
         skillPanel.anchoredPosition = targetPos;
-       StartCoroutine(HideInfor());
+        skillInforPanel.SetActive(false);
+        //StartCoroutine(HideInfor());
     }
     private void ChangeAlphaValueForText()
     {
@@ -52,12 +53,12 @@ public class SkillPanelUI : MonoBehaviour
     }
     private IEnumerator ShowInfor()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.4f);
         skillInforPanel.SetActive(true);
     }
     private IEnumerator HideInfor()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.4f);
         skillInforPanel.SetActive(false);
     }
 }

@@ -468,6 +468,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChooseSkillCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7061625613791311885, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
