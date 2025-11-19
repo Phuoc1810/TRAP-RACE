@@ -142,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
             if (exitPoint != null)
             {
                 StopAllCoroutines();
-                StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
+                currentMovementCoroutine = StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
 
                 path.Clear();
                 return;
@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Di chuyển bình thường
-        StartCoroutine(MoveAlongPath(nextTile.transform.position));
+        currentMovementCoroutine = StartCoroutine(MoveAlongPath(nextTile.transform.position));
         currentPathIndex++; // Chỉ tăng index sau khi gọi thành công MoveAlongPath
     }
     private IEnumerator MoveToExitPoint(Vector3 targetPosition)
