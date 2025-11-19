@@ -12,6 +12,7 @@ TagManager:
   - BayDa
   - BayBua
   - UsedStartPoint
+  - ENDLINE
   layers:
   - Default
   - TransparentFX

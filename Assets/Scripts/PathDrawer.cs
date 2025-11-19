@@ -7,17 +7,17 @@ public class PathDrawer : MonoBehaviour
 
     [Header("Object References")]
     public PlayerMovement player; // Tham chiếu đến script PlayerMovement
-
+    public GridManager gridManager;
     private Camera mainCamera;
-    
+
     // === THAY ĐỔI ===
     // 'currentPath' là đường đang VẼ (trong khi giữ chuột)
     private List<TileInfo> currentPath = new List<TileInfo>();
-    
+
     // 'confirmedPath' là đường ĐÃ VẼ XONG (sau khi thả chuột)
     private List<TileInfo> confirmedPath = new List<TileInfo>();
     // === KẾT THÚC THAY ĐỔI ===
-    
+
     private bool isDrawing = false;
 
     void Start()
@@ -30,7 +30,11 @@ public class PathDrawer : MonoBehaviour
         // 1. Khi bắt đầu nhấn chuột
         if (Input.GetMouseButtonDown(0))
         {
-            StartDrawing();
+            TileInfo tileInfo = GetTileUnderMouse();
+            if (tileInfo != null)
+            {
+                HandleTileClicked(tileInfo);
+            }
         }
         // 2. Khi đang giữ chuột (đang vuốt)
         else if (Input.GetMouseButton(0) && isDrawing)
@@ -41,18 +45,19 @@ public class PathDrawer : MonoBehaviour
         else if (Input.GetMouseButtonUp(0) && isDrawing)
         {
             StopDrawing();
+
         }
-        
+
         // === THAY ĐỔI ===
         // 4. Khi nhấn phím 'E'
         if (Input.GetKeyDown(KeyCode.E))
         {
-            TriggerPlayerMovement();
+            ValidateAndMovePlayer(currentPath);
         }
         // === KẾT THÚC THAY ĐỔI ===
     }
 
-    void StartDrawing()
+    void StartDrawing(TileInfo tile)
     {
         // === THAY ĐỔI: YÊU CẦU RESET ===
         // Nếu người chơi bắt đầu vẽ một đường mới
@@ -64,7 +69,7 @@ public class PathDrawer : MonoBehaviour
         }
         // === KẾT THÚC THAY ĐỔI ===
 
-        TileInfo tile = GetTileUnderMouse();
+        //TileInfo tile = GetTileUnderMouse();
         if (tile != null)
         {
             isDrawing = true;
@@ -97,17 +102,17 @@ public class PathDrawer : MonoBehaviour
         confirmedPath = new List<TileInfo>(currentPath);
 
         // Xóa đường đi tạm thời (để chuẩn bị cho lần vẽ tiếp)
-        currentPath.Clear();
+        //currentPath.Clear();
 
         if (confirmedPath.Count > 0)
         {
             Debug.Log($"Đã xác nhận đường đi! Gồm {confirmedPath.Count} ô. Nhấn E để di chuyển.");
         }
     }
-    
 
 
-  
+
+
     void TriggerPlayerMovement()
     {
         // Chỉ chạy nếu có đường đi đã xác nhận VÀ player đang không di chuyển
@@ -133,8 +138,8 @@ public class PathDrawer : MonoBehaviour
             Debug.Log("Không có đường đi nào (confirmedPath) để chạy!");
         }
     }
-    
-    
+
+
     void ResetConfirmedPath()
     {
         // Đặt lại màu cho tất cả các ô trong đường đi đã xác nhận
@@ -149,7 +154,7 @@ public class PathDrawer : MonoBehaviour
         confirmedPath.Clear();
         Debug.Log("Đã reset đường đi đã xác nhận.");
     }
-   
+
 
 
     // (Các hàm GetTileUnderMouse, AddTileToPath, IsAdjacent giữ nguyên như cũ)
@@ -161,9 +166,9 @@ public class PathDrawer : MonoBehaviour
         int layerToIgnore = 1 << LayerMask.NameToLayer("Trap");
         int layerMask = ~layerToIgnore; // lấy tất cả layer trừ layer này
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f,layerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, layerMask))
         {
-            if (hit.collider.CompareTag("LandTile") || hit.collider.CompareTag("FinishLine") || hit.collider.CompareTag("GoalTouch"))
+            if (hit.collider.CompareTag("LandTile") || hit.collider.CompareTag("FinishLine") || hit.collider.CompareTag("ENDLINE"))
             {
                 return hit.collider.GetComponent<TileInfo>();
             }
@@ -174,7 +179,7 @@ public class PathDrawer : MonoBehaviour
     void AddTileToPath(TileInfo tile)
     {
         // Thêm vào đường đi 'đang vẽ'
-        currentPath.Add(tile); 
+        currentPath.Add(tile);
         tile.GetComponent<Renderer>().material.color = highlightColor;
     }
 
@@ -183,5 +188,70 @@ public class PathDrawer : MonoBehaviour
         int deltaX = Mathf.Abs(lastTile.x - newTile.x);
         int deltaZ = Mathf.Abs(lastTile.z - newTile.z);
         return (deltaX + deltaZ == 1);
+    }
+    void HandleTileClicked(TileInfo clickedTile)
+    {
+        // Lấy tọa độ lưới của ô được click
+        Vector2Int tileCoords = clickedTile.GetCoords(); // Giả định TileInfo có hàm GetCoords()
+
+        // 1. KIỂM TRA ĐIỀU KIỆN Z = 0
+        if (tileCoords.y != (gridManager.height + 1))
+        {
+            if (tileCoords.y != 0) // Hoặc tileCoords.z, tùy vào cách bạn thiết lập
+            {
+                Debug.Log("Không thể bắt đầu vẽ đường đi từ ô này. Phải bắt đầu từ hàng đầu tiên (Z=0).");
+                return; // Dừng lại, không cho phép vẽ
+            }
+        }
+
+        // 2. NẾU ĐIỀU KIỆN ĐƯỢC THỎA MÃN (Z=0)
+        // Bắt đầu logic vẽ đường đi và di chuyển Player như bình thường
+        StartDrawing(clickedTile);
+    }
+    public void ValidateAndMovePlayer(List<TileInfo> drawnPath)
+    {
+        // 1. KIỂM TRA ĐƯỜNG ĐI CÓ HỢP LỆ KHÔNG (Bắt đầu từ Z=0)
+        // (Logic kiểm tra điểm bắt đầu đã được xử lý ở lần trước)
+        if (drawnPath == null || drawnPath.Count == 0)
+        {
+            Debug.LogError("Đường đi trống!");
+            ResetConfirmedPath();
+            return;
+        }
+
+        // 2. TÌM Ô ĐÍCH THỰC TẾ
+        // Tìm đối tượng FinishLine bằng tag mà bạn đã gán trong SpawnGrid()
+        GameObject finishLineObject = GameObject.FindGameObjectWithTag("ENDLINE");
+
+        if (finishLineObject == null)
+        {
+            Debug.LogError("Không tìm thấy ENDLINE trong scene!");
+            return;
+        }
+
+        // 3. KIỂM TRA ĐIỂM KẾT THÚC BẮT BUỘC
+        TileInfo lastTileInPath = drawnPath[drawnPath.Count - 1]; // Lấy ô cuối cùng trong List
+
+        // So sánh vị trí của ô cuối cùng trong đường đi với vị trí của FinishLine
+        // Chúng ta so sánh vị trí vì cả hai đều là Tile GameObject
+        if (lastTileInPath.transform.position != finishLineObject.transform.position)
+        {
+            // 🚨 THÔNG BÁO LỖI CHO NGƯỜI CHƠI
+            Debug.LogWarning("Đường đi KHÔNG HỢP LỆ! Phải kết thúc chính xác tại Ô Đích (ENDLINE).");
+
+            // Bạn có thể thêm:
+            ResetConfirmedPath();
+            // * Thông báo UI cho người dùng.
+
+            return; // Dừng lại, không cho Player di chuyển
+        }
+
+        // 4. NẾU HỢP LỆ, CHUYỂN PATH CHO PLAYER
+        Debug.Log("Đường đi hợp lệ! Bắt đầu di chuyển.");
+        //PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        if (player != null)
+        {
+            player.FollowPath(new List<TileInfo>(confirmedPath)); // Gọi hàm di chuyển Player
+        }
     }
 }

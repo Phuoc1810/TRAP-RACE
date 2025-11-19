@@ -194,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightColor: {r: 0, g: 1, b: 0, a: 1}
   player: {fileID: 200144732}
+  gridManager: {fileID: 189976229}
 --- !u!114 &200144732 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3409309086563523709, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
@@ -565,7 +566,7 @@ Transform:
   m_GameObject: {fileID: 1718728906}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8179, y: 0, z: 3}
+  m_LocalPosition: {x: 0.8179, y: -0.1, z: 3}
   m_LocalScale: {x: 4.694659, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -647,10 +648,6 @@ PrefabInstance:
     - target: {fileID: 4012597027371602799, guid: 4ba0582f372e8464eb26dd28d3af6eb4, type: 3}
       propertyPath: m_Name
       value: StartPoint_Used
-      objectReference: {fileID: 0}
-    - target: {fileID: 4012597027371602799, guid: 4ba0582f372e8464eb26dd28d3af6eb4, type: 3}
-      propertyPath: m_TagString
-      value: UsedStartPoint
       objectReference: {fileID: 0}
     - target: {fileID: 8066207473528286555, guid: 4ba0582f372e8464eb26dd28d3af6eb4, type: 3}
       propertyPath: m_LocalPosition.x
