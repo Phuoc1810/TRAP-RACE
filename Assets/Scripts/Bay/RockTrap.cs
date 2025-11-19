@@ -4,8 +4,8 @@ using UnityEngine;
 public class RockTrap : MonoBehaviour
 {
     public GameObject[] rockPrefabs;   // danh sách đá có thể rơi
-    public Transform spawnArea;        // box collider để giới hạn spawn
-    public int rockCount = 5;          // số lượng đá rơi
+    public Transform tramDorm;         // vị trí tram dorm nơi đá sẽ rơi
+    public int rockCount = 1;          // số lượng đá rơi
     public float spawnHeightY = 9f;    // height Y nơi đá rơi xuống
     public float delayPerRock = 0.1f;  // thời gian giữa mỗi viên đá
 
@@ -22,34 +22,28 @@ public class RockTrap : MonoBehaviour
 
     private IEnumerator SpawnRocks()
     {
-        BoxCollider box = spawnArea.GetComponent<BoxCollider>();
-
         for (int i = 0; i < rockCount; i++)
         {
             // Chọn prefab ngẫu nhiên
             GameObject rock = rockPrefabs[Random.Range(0, rockPrefabs.Length)];
 
-            // Random trong Box Collider
-            Vector3 randomPos = GetRandomPointInBox(box);
+            // Lấy vị trí của tram dorm
+            Vector3 spawnPos = tramDorm.position;
 
             // Set chiều cao Y = spawnHeightY
-            randomPos.y = spawnHeightY;
+            spawnPos.y = spawnHeightY;
 
-            Instantiate(rock, randomPos, Quaternion.identity);
+            // Tạo đá và bắt đầu coroutine xóa sau 2 giây
+            GameObject rockInstance = Instantiate(rock, spawnPos, Quaternion.identity);
+            StartCoroutine(DestroyRockAfterDelay(rockInstance, 3f));
 
             yield return new WaitForSeconds(delayPerRock);
         }
     }
 
-    private Vector3 GetRandomPointInBox(BoxCollider box)
+    private IEnumerator DestroyRockAfterDelay(GameObject rock, float delay)
     {
-        Vector3 center = box.transform.position + box.center;
-        Vector3 size = box.size;
-
-        return new Vector3(
-            Random.Range(center.x - size.x / 2, center.x + size.x / 2),
-            Random.Range(center.y - size.y / 2, center.y + size.y / 2),
-            Random.Range(center.z - size.z / 2, center.z + size.z / 2)
-        );
+        yield return new WaitForSeconds(delay);
+        Destroy(rock);
     }
 }
