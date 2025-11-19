@@ -127,9 +127,11 @@ public class GridManager : MonoBehaviour
                 }
 
                 gridArray[x, z] = newTile;
+
+                
             }
         }
-
+        gridArray[goalCoordinates.x, goalCoordinates.y].tag = "ENDLINE";
         // 2. SPAWN 1 Ô DƯ RA DUY NHẤT LÀ FINISH LINE
         if (lastGridTile != null)
         {
@@ -140,7 +142,7 @@ public class GridManager : MonoBehaviour
             GameObject finishLine = Instantiate(landTilePrefab, finishPosition, Quaternion.identity, transform);
             finishLine.name = "FINISH LINE (Extra Tile)";
             finishLine.tag = "FinishLine";
-            finishLine.GetComponent<Renderer>().material.color = Color.green;
+            finishLine.GetComponent<Renderer>().material.color = Color.blue;
 
             TileInfo finishInfo = finishLine.GetComponent<TileInfo>();
             if (finishInfo == null) finishInfo = finishLine.AddComponent<TileInfo>();
@@ -153,7 +155,7 @@ public class GridManager : MonoBehaviour
                 // Vị trí Z mới: Gốc map mới + Chiều dài map
                 Vector3 newExitPosition = new Vector3(
                     1f,
-                    0, // Đặt ở Y=0 (Mặt đất)
+                    -0.1f, // Đặt ở Y=0 (Mặt đất)
                     totalZOffset + (height * spacing)
                 );
 

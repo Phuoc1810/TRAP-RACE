@@ -194,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightColor: {r: 0, g: 1, b: 0, a: 1}
   player: {fileID: 200144732}
+  gridManager: {fileID: 189976229}
 --- !u!114 &200144732 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3409309086563523709, guid: 3d123777f28e871479a1b6f074a46200, type: 3}

@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float PlayerYOffset=0.5f;
     [Tooltip("Tốc độ di chuyển của player")]
     public float moveSpeed = 5f;
-
+   public float count = 0;
     Coroutine currentMovementCoroutine;
 
     [Tooltip("Độ cao Y mà player nên đứng (tránh lún xuống sàn)")]
@@ -116,7 +116,29 @@ public class PlayerMovement : MonoBehaviour
 
         // Đảm bảo dừng chính xác
         transform.position = targetPosition;
+        if (currentPathIndex > 0)
+        {
+            // currentPathIndex đã được tăng trước khi gọi MoveAlongPath.
+            // Tile vừa đi đến là path[currentPathIndex - 1]
+            TileInfo reachedTile = path[currentPathIndex - 1];
 
+            if (reachedTile.gameObject.CompareTag("ENDLINE"))
+            {
+                // Đã đến tâm FinishLine, bây giờ mới chuyển hướng sang ExitPoint
+                isMoving = false;
+
+                GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
+                if (exitPoint != null)
+                {
+                    StopAllCoroutines();
+                    currentMovementCoroutine = StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
+                    yield break; // Hoàn thành Coroutine MoveAlongPath
+                }
+            }
+        }
+
+        // Nếu không phải FinishLine, tiếp tục đến Tile tiếp theo trong Path
+        
         // Tiếp tục di chuyển đến ô kế tiếp
         MoveToNextTile();
     }
@@ -135,19 +157,23 @@ public class PlayerMovement : MonoBehaviour
         TileInfo nextTile = path[currentPathIndex];
 
         // KIỂM TRA TỰ ĐỘNG CHUYỂN TIẾP (Chạm FinishLine)
-        if (nextTile != null && nextTile.gameObject.CompareTag("FinishLine"))
-        {
-            GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
+        //if (nextTile != null && nextTile.gameObject.CompareTag("ENDLINE"))
+        //{
+           
+           
+        //        GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
 
-            if (exitPoint != null)
-            {
-                StopAllCoroutines();
-                currentMovementCoroutine = StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
+        //        if (exitPoint != null)
+        //        {
+        //            StopAllCoroutines();
+        //            currentMovementCoroutine = StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
 
-                path.Clear();
-                return;
-            }
-        }
+        //            path.Clear();
+        //            count = 0;
+        //            return;
+        //        }
+            
+        //}
 
         // Di chuyển bình thường
         currentMovementCoroutine = StartCoroutine(MoveAlongPath(nextTile.transform.position));

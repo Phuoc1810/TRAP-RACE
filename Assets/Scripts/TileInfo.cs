@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class TileInfo : MonoBehaviour
 {
@@ -16,4 +17,8 @@ public class TileInfo : MonoBehaviour
     // (Tùy chọn) Lưu màu gốc để reset khi vuốt xong
     [HideInInspector] // Giấu đi cho gọn Inspector
     public Color originalColor;
+    public Vector2Int GetCoords()
+    {
+        return new Vector2Int(x, z);
+    }
 }
