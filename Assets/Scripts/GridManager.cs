@@ -27,6 +27,7 @@ public class GridManager : MonoBehaviour
     public GameObject trapPrefab;   // Prefab cho cái bẫy
     public int numberOfTraps = 2;  // Số lượng bẫy cần spawn
     public float trapYOffset = 0.5f; // Độ cao Y để bẫy không bị lún
+    public List<Vector2Int> trapPositions = new List<Vector2Int>();
 
     [Header("Game Logic")]
     [Tooltip("Tọa độ (X, Z) của ô vạch đích")]
@@ -221,6 +222,7 @@ public class GridManager : MonoBehaviour
         if (foundValidPlacement)
         {
             Debug.Log($"Đã tìm thấy vị trí đặt bẫy hợp lệ. Đang spawn {trapsToSpawn} bẫy.");
+            trapPositions = new List<Vector2Int>(chosenTrapLocations);// Lưu lại vị trí bẫy đã chọn
             foreach (Vector2Int pos in chosenTrapLocations)
             {
                 GameObject tile = gridArray[pos.x, pos.y];
