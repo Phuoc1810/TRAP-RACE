@@ -1381,22 +1381,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 955216192346893915, guid: 6a77f43614c1b064d82f322c407b26c5, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 955216192346893915, guid: 6a77f43614c1b064d82f322c407b26c5, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 955216192346893915, guid: 6a77f43614c1b064d82f322c407b26c5, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 955216192346893915, guid: 6a77f43614c1b064d82f322c407b26c5, type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: f0d1d00ff90085348817ce2d3a9d5067, type: 3}
     - target: {fileID: 2520543494298666336, guid: 6a77f43614c1b064d82f322c407b26c5, type: 3}
       propertyPath: m_Name
       value: ShowTrapCanvas
