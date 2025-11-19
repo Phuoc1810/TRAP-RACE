@@ -12,6 +12,7 @@ public class GridManager : MonoBehaviour
    [ Header("Exit Tile Settings")]
    [Tooltip("Prefab cho ô đích cuối cùng (Exit Tile)")]
     public GameObject exitTilePrefab;
+    public GameObject exitPointPrefab;
 
     [Tooltip("Khoảng cách offset từ ô grid cuối cùng đến Exit Tile")]
     public Vector3 exitOffset = new Vector3(2f, 0f, 0f); // Ví dụ: Offset 2 đơn vị theo trục X
@@ -40,6 +41,7 @@ public class GridManager : MonoBehaviour
     [Header("References")]
     public Camera mainCamera;
     public PlayerMovement playerMovement;
+    private float totalZOffset = 0f;
    
 
     void Start()
@@ -106,9 +108,10 @@ public class GridManager : MonoBehaviour
 
                 bool isLastTile = (x == width - 1 && z == height - 1);
 
-                Vector3 position = new Vector3(x * spacing, 0, z * spacing);
+                Vector3 position = new Vector3(x * spacing, 0, (z * spacing) + totalZOffset);
+
                 GameObject newTile = Instantiate(landTilePrefab, position, Quaternion.identity, transform);
-                newTile.name = $"Tile ({x}, {z})";
+                newTile.name = $"Tile ({x}, {z}) (Z Offset: {totalZOffset})";
 
                 TileInfo tileInfo = newTile.GetComponent<TileInfo>();
                 if (tileInfo == null) tileInfo = newTile.AddComponent<TileInfo>();
@@ -116,7 +119,7 @@ public class GridManager : MonoBehaviour
                 tileInfo.SetCoords(x, z);
                 tileInfo.originalColor = newTile.GetComponent<Renderer>().material.color;
 
-                newTile.tag = "LandTile"; // <-- TẤT CẢ TILE TRONG LƯỚI ĐỀU LÀ LandTile
+                newTile.tag = "LandTile";
 
                 if (isLastTile)
                 {
@@ -125,42 +128,47 @@ public class GridManager : MonoBehaviour
 
                 gridArray[x, z] = newTile;
 
+                
+            }
+        }
+        gridArray[goalCoordinates.x, goalCoordinates.y].tag = "ENDLINE";
+        // 2. SPAWN 1 Ô DƯ RA DUY NHẤT LÀ FINISH LINE
+        if (lastGridTile != null)
+        {
+            // FinishLine được đặt dựa trên vị trí của Tile cuối cùng đã dịch chuyển
+            Vector3 exitOffset = new Vector3(0, 0, spacing);
+            Vector3 finishPosition = lastGridTile.transform.position + exitOffset;
 
+            GameObject finishLine = Instantiate(landTilePrefab, finishPosition, Quaternion.identity, transform);
+            finishLine.name = "FINISH LINE (Extra Tile)";
+            finishLine.tag = "FinishLine";
+            finishLine.GetComponent<Renderer>().material.color = Color.blue;
 
-                // 2. SPAWN 1 Ô ĐÍCH DUY NHẤT (Vạch đích thực sự)
-                if (lastGridTile != null)
+            TileInfo finishInfo = finishLine.GetComponent<TileInfo>();
+            if (finishInfo == null) finishInfo = finishLine.AddComponent<TileInfo>();
+            finishInfo.SetCoords(-1, -1);
+
+            // 3. ĐẶT EXIT POINT MỚI CHO CẤP ĐỘ SAU
+
+            if (exitPointPrefab != null && GameObject.FindGameObjectWithTag("ExitPoint") == null)
+            {
+                // Vị trí Z mới: Gốc map mới + Chiều dài map
+                Vector3 newExitPosition = new Vector3(
+                    1f,
+                    -0.1f, // Đặt ở Y=0 (Mặt đất)
+                    totalZOffset + (height * spacing)
+                );
+
+                // * SỬ DỤNG INSTANTIATE PREFAB *
+                GameObject newExitPoint = Instantiate(exitPointPrefab, newExitPosition, Quaternion.identity);
+                newExitPoint.name = "ExitPoint_Active";
+
+                // Prefab đã có tag, nhưng chúng ta vẫn nên kiểm tra
+                if (!newExitPoint.CompareTag("ExitPoint"))
                 {
-                    Vector3 exitOffset = new Vector3(0, 0, spacing);
-                    Vector3 finishPosition = lastGridTile.transform.position + exitOffset;
-
-                    GameObject finishLine = Instantiate(landTilePrefab, finishPosition, Quaternion.identity, transform);
-                    finishLine.name = "FINISH LINE (Extra Tile)";
-                    finishLine.tag = "FinishLine"; // <-- Ô DƯ RA LÀ FinishLine
-                    finishLine.GetComponent<Renderer>().material.color = Color.blue;
-
-                    TileInfo finishInfo = finishLine.GetComponent<TileInfo>();
-                    if (finishInfo == null) finishInfo = finishLine.AddComponent<TileInfo>();
-                    finishInfo.SetCoords(-1, -1);
-
-
-
-                    // 4. Lưu lại để "bắt vị trí" sau này
-                    gridArray[x, z] = newTile;
-
+                    newExitPoint.tag = "ExitPoint";
                 }
             }
-        } 
-            // ... (phần Debug.Log giữ nguyên) ...
-        
-    
-
-        Debug.Log($"Đã tạo xong lưới {width}x{height}!");
-
-        // Ví dụ cách lấy vị trí ô ở giữa (1, 1)
-        if (width > 1 && height > 1)
-        {
-            GameObject middleTile = gridArray[1, 1];
-            Debug.Log($"Vị trí 'point' của ô ở giữa (1,1) là: {middleTile.transform.position}");
         }
     }
     /// <summary>
@@ -168,7 +176,7 @@ public class GridManager : MonoBehaviour
     /// </summary>
     void SpawnRandomTraps()
     {
-        if (trapPrefab == null)
+        if (trapPrefab == null || numberOfTraps == 0)
         {
             Debug.LogWarning("Chưa gán 'Trap Prefab', bỏ qua spawn bẫy.");
             return;
@@ -217,29 +225,40 @@ public class GridManager : MonoBehaviour
                 break;
             }
         }
-
-        // 3. Spawn bẫy nếu tìm thấy vị trí hợp lệ
-        if (foundValidPlacement)
+        for (int i = 0; i < numberOfTraps && spawnableLocations.Count > 0; i++)
         {
-            Debug.Log($"Đã tìm thấy vị trí đặt bẫy hợp lệ. Đang spawn {trapsToSpawn} bẫy.");
-            trapPositions = new List<Vector2Int>(chosenTrapLocations);// Lưu lại vị trí bẫy đã chọn
-            foreach (Vector2Int pos in chosenTrapLocations)
+            int randomIndex = Random.Range(0, spawnableLocations.Count);
+            Vector2Int coords = spawnableLocations[randomIndex];
+
+            // * TÍNH TỌA ĐỘ THẾ GIỚI MỚI VỚI totalZOffset *
+            Vector3 spawnPosition = new Vector3(
+                coords.x * spacing,
+                trapYOffset, // Chiều cao của bẫy
+                (coords.y * spacing) + totalZOffset // ÁP DỤNG totalZOffset
+            );
+            // 3. Spawn bẫy nếu tìm thấy vị trí hợp lệ
+            if (foundValidPlacement)
             {
-                GameObject tile = gridArray[pos.x, pos.y];
-                Vector3 trapPosition = new Vector3(
-                    tile.transform.position.x,
-                    trapYOffset,
-                    tile.transform.position.z
-                );
+                Debug.Log($"Đã tìm thấy vị trí đặt bẫy hợp lệ. Đang spawn {trapsToSpawn} bẫy.");
+                trapPositions = new List<Vector2Int>(chosenTrapLocations);// Lưu lại vị trí bẫy đã chọn
+                foreach (Vector2Int pos in chosenTrapLocations)
+                {
+                    GameObject tile = gridArray[pos.x, pos.y];
+                    Vector3 trapPosition = new Vector3(
+                        tile.transform.position.x,
+                        trapYOffset,
+                        tile.transform.position.z
+                    );
 
-                GameObject newTrap = Instantiate(trapPrefab, trapPosition, Quaternion.identity);
-                newTrap.name = $"Trap ({pos.x}, {pos.y})";
-                newTrap.transform.SetParent(tile.transform);
+                    GameObject newTrap = Instantiate(trapPrefab, trapPosition, Quaternion.identity);
+                    newTrap.name = $"Trap ({pos.x}, {pos.y})";
+                    newTrap.transform.SetParent(tile.transform);
+                }
             }
-        }
-        else
-        {
-            Debug.LogWarning($"Không thể tìm vị trí đặt {trapsToSpawn} bẫy mà không chặn đường sau {maxTries} lần thử!");
+            else
+            {
+                Debug.LogWarning($"Không thể tìm vị trí đặt {trapsToSpawn} bẫy mà không chặn đường sau {maxTries} lần thử!");
+            }
         }
     }
     /// <summary>
@@ -298,27 +317,45 @@ public class GridManager : MonoBehaviour
     }
     public void StartNextLevel()
     {
-        // 1. PHÁ HỦY MAP CŨ và ExitPoint thủ công
+        // 1. LẤY VỊ TRÍ NEO MỚI TỪ EXIT POINT CŨ
+        GameObject oldExit = GameObject.FindGameObjectWithTag("ExitPoint");
+
+        if (oldExit != null)
+        {
+            // Lấy vị trí Z của ExitPoint cũ (Đây sẽ là tọa độ Z bắt đầu của map mới)
+            totalZOffset = oldExit.transform.position.z+1f;
+
+            // Bỏ tag của ExitPoint cũ (để giữ lại nhưng không kích hoạt lại)
+            oldExit.tag = "UsedStartPoint";
+            oldExit.name = "StartPoint_Used";
+        }
+        // Nếu oldExit == null (lần chơi đầu), totalZOffset là 0.
+        GameObject startPointToRemove = GameObject.Find("StartPoint_Used");
+        if (startPointToRemove != null && startPointToRemove != oldExit) // Tránh xóa chính ExitPoint vừa đổi tag
+        {
+            // Có thể bạn cần một tag riêng cho StartPoint ban đầu nếu nó không phải là ExitPoint cũ
+            Destroy(startPointToRemove);
+        }
+        // 2. PHÁ HỦY MAP CŨ (giữ lại Start/ExitPoint đã đổi tag)
         DestroyCurrentGrid();
 
-        // 2. RESET TẠO MAP MỚI
+        // 3. TẠO MAP MỚI
         gridArray = null;
-        // Đảm bảo spawnPositions được khởi tạo lại hoặc Clear nếu nó là List
-        // Nếu bạn khai báo nó là List<Vector3> spawnPositions = new List<Vector3>(); 
-        // thì dùng spawnPositions.Clear();
+        spawnPositions.Clear();
+        Start(); // Gọi lại Start() để spawn grid mới ở vị trí totalZOffset
 
-        Start(); // Gọi lại Start() để spawn grid mới
-
-        // 3. KÉO CAMERA TỚI VỊ TRÍ MỚI
+        // 4. KÉO CAMERA TỚI VỊ TRÍ MỚI
         if (mainCamera != null)
         {
+            // Tính toán tâm Z mới: Z_bắt đầu + nửa chiều dài map
             Vector3 newCenter = new Vector3((width - 1) * spacing / 2f,
                                             mainCamera.transform.position.y,
-                                            (height - 1) * spacing / 2f);
+                                            totalZOffset + (height - 1) * spacing / 2f);
 
             StartCoroutine(MoveCameraSmoothly(newCenter));
         }
     }
+
 
     void DestroyCurrentGrid()
     {

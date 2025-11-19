@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float PlayerYOffset=0.5f;
     [Tooltip("Tốc độ di chuyển của player")]
     public float moveSpeed = 5f;
-
+   public float count = 0;
     Coroutine currentMovementCoroutine;
 
     [Tooltip("Độ cao Y mà player nên đứng (tránh lún xuống sàn)")]
@@ -116,7 +116,29 @@ public class PlayerMovement : MonoBehaviour
 
         // Đảm bảo dừng chính xác
         transform.position = targetPosition;
+        if (currentPathIndex > 0)
+        {
+            // currentPathIndex đã được tăng trước khi gọi MoveAlongPath.
+            // Tile vừa đi đến là path[currentPathIndex - 1]
+            TileInfo reachedTile = path[currentPathIndex - 1];
 
+            if (reachedTile.gameObject.CompareTag("ENDLINE"))
+            {
+                // Đã đến tâm FinishLine, bây giờ mới chuyển hướng sang ExitPoint
+                isMoving = false;
+
+                GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
+                if (exitPoint != null)
+                {
+                    StopAllCoroutines();
+                    currentMovementCoroutine = StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
+                    yield break; // Hoàn thành Coroutine MoveAlongPath
+                }
+            }
+        }
+
+        // Nếu không phải FinishLine, tiếp tục đến Tile tiếp theo trong Path
+        
         // Tiếp tục di chuyển đến ô kế tiếp
         MoveToNextTile();
     }
@@ -135,19 +157,23 @@ public class PlayerMovement : MonoBehaviour
         TileInfo nextTile = path[currentPathIndex];
 
         // KIỂM TRA TỰ ĐỘNG CHUYỂN TIẾP (Chạm FinishLine)
-        if (nextTile != null && nextTile.gameObject.CompareTag("FinishLine"))
-        {
-            GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
+        //if (nextTile != null && nextTile.gameObject.CompareTag("ENDLINE"))
+        //{
+           
+           
+        //        GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
 
-            if (exitPoint != null)
-            {
-                StopAllCoroutines();
-                currentMovementCoroutine = StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
+        //        if (exitPoint != null)
+        //        {
+        //            StopAllCoroutines();
+        //            currentMovementCoroutine = StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
 
-                path.Clear();
-                return;
-            }
-        }
+        //            path.Clear();
+        //            count = 0;
+        //            return;
+        //        }
+            
+        //}
 
         // Di chuyển bình thường
         currentMovementCoroutine = StartCoroutine(MoveAlongPath(nextTile.transform.position));
@@ -155,22 +181,24 @@ public class PlayerMovement : MonoBehaviour
     }
     private IEnumerator MoveToExitPoint(Vector3 targetPosition)
     {
-        // ... (Logic di chuyển đến ExitPoint giữ nguyên) ...
-        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+       float targetGoundY = targetPosition.y;
+        Vector3 finalTargetPosition = targetPosition;
+        finalTargetPosition.y = targetGoundY + 0.5f;
+        while (Vector3.Distance(transform.position, finalTargetPosition) > 0.01f)
         {
             //Nhân vật luôn hướng về phía di chuyển
-            Vector3 direction = (targetPosition - transform.position).normalized;
+            Vector3 direction = (finalTargetPosition - transform.position).normalized;
             if (direction != Vector3.zero)
             {
                 Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, finalTargetPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
         
-        transform.position = targetPosition;
+        transform.position = finalTargetPosition;
         isMoving = false;
         playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
 
@@ -178,7 +206,7 @@ public class PlayerMovement : MonoBehaviour
         if (gridManager != null)
         {
             // Reset vị trí Player về (0, Y_offset, 0) của map mới
-            transform.position = new Vector3(1, PlayerYOffset, -1); 
+           
             gridManager.StartNextLevel();
         }
     }
