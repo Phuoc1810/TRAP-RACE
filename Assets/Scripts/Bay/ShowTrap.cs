@@ -19,6 +19,7 @@ public class ShowTrap : MonoBehaviour
     [Header("references đến các scripts")]
     public SkillPanelUI skillPanelUI;
     [SerializeField] private PathDrawer pathDrawer;
+    [SerializeField] private SkillManager skillManager;
 
     public GameObject ShowTrapAt(int x, int y)
     {
@@ -95,7 +96,7 @@ public class ShowTrap : MonoBehaviour
         countDownShowTrapText.gameObject.SetActive(false);
 
         //Show skill panel
-        if (currentTime == 0)
+        if (currentTime == 0 && skillManager.SkillSelected == false)
         {
             skillPanelUI.ShowPanel();
         }
