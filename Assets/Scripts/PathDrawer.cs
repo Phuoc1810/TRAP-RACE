@@ -18,6 +18,7 @@ public class PathDrawer : MonoBehaviour
     private List<TileInfo> confirmedPath = new List<TileInfo>();
     // === KẾT THÚC THAY ĐỔI ===
 
+    public bool enableDrawing = false;
     private bool isDrawing = false;
 
     void Start()
@@ -253,5 +254,15 @@ public class PathDrawer : MonoBehaviour
         {
             player.FollowPath(new List<TileInfo>(confirmedPath)); // Gọi hàm di chuyển Player
         }
+    }
+
+    public void EnableDrawing()
+    { 
+        enableDrawing = true;
+    }
+
+    public void DisableDrawing()
+    {
+        enableDrawing = false;
     }
 }

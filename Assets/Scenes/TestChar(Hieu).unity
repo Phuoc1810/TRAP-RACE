@@ -668,17 +668,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &602383597 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4011535627344789399, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-  m_PrefabInstance: {fileID: 1476235303}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &650436469
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,17 +747,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650436469}
   m_CullTransparentMesh: 1
---- !u!114 &651989617 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 976225754981188380, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-  m_PrefabInstance: {fileID: 1476235303}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,42 +1248,10 @@ PrefabInstance:
       propertyPath: playerSkill
       value: 
       objectReference: {fileID: 3846530581745324424}
-    - target: {fileID: 980061012324483350, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3275980316457682835, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
       propertyPath: m_Name
       value: ChooseSkillCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7207741887029695682, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7207741887029695682, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -582
-      objectReference: {fileID: 0}
-    - target: {fileID: 8159327795042433535, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: speedPosition
-      value: 0.008
-      objectReference: {fileID: 0}
-    - target: {fileID: 8159327795042433535, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: skillButtons.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8159327795042433535, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: 'skillButtons.Array.data[0]'
-      value: 
-      objectReference: {fileID: 602383597}
-    - target: {fileID: 8159327795042433535, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: 'skillButtons.Array.data[1]'
-      value: 
-      objectReference: {fileID: 651989617}
-    - target: {fileID: 8159327795042433535, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: 'skillButtons.Array.data[2]'
-      value: 
-      objectReference: {fileID: 1986839284}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1428,17 +1374,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcf8b47781558534bba4ec28d77f822c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1986839284 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 93828164064325591, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-  m_PrefabInstance: {fileID: 1476235303}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3846530581745324423
