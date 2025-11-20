@@ -44,7 +44,6 @@ public class SkillPanelUI : MonoBehaviour
     public void ShowPanel()
     {
         isShowing = true;
-        skillManager.EnableSelectSkill();
         skillPanel.gameObject.SetActive(true);
         StartCoroutine(MovePanel());
         StartCoroutine(ShowInfor());

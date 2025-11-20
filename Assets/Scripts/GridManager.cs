@@ -42,7 +42,8 @@ public class GridManager : MonoBehaviour
     public Camera mainCamera;
     public PlayerMovement playerMovement;
     private float totalZOffset = 0f;
-   
+    public SkillManager skillManager;
+
 
     void Start()
     {
@@ -354,6 +355,9 @@ public class GridManager : MonoBehaviour
 
             StartCoroutine(MoveCameraSmoothly(newCenter));
         }
+
+        //5. Cho phép chọn kỹ năng lại
+        skillManager.EnableSelectSkill();
     }
 
 
