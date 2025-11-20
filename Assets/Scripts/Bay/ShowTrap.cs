@@ -13,7 +13,7 @@ public class ShowTrap : MonoBehaviour
 
     [Header("Count down")]
     public Text countDownShowTrapText;
-    public float countDownTime = 5f;
+    //public float countDownTime = 5f;
     private float currentTime;
 
     [Header("references đến các scripts")]
@@ -44,10 +44,10 @@ public class ShowTrap : MonoBehaviour
     public void BeginShowTrap()
     {
         DisableController();
-        StartCoroutine(ShowAllTrap());
+        StartCoroutine(ShowAllTrap(5f));
     }
 
-    public IEnumerator ShowAllTrap()
+    public IEnumerator ShowAllTrap(float countDownTime)
     {
         //Show text
         countDownShowTrapText.gameObject.SetActive(true);
