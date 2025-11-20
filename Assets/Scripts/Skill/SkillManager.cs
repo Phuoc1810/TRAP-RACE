@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Net.NetworkInformation;
+using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
@@ -8,7 +9,9 @@ public class SkillManager : MonoBehaviour
     public PlayerSkill playerSkill;
     [SerializeField] private SkillPanelUI skillPanelUI;
     [SerializeField] private ShowTrap showTrap;
+    [SerializeField] private ShowTrap showTrapScript;
 
+    public bool SkillSelected => skillSelected;
 
     public void SelecterSkill(string skillName)
     {
@@ -36,12 +39,12 @@ public class SkillManager : MonoBehaviour
             else if (currentSkill == "Record Trap")
             {
                 StartCoroutine(skillPanelUI.HidePanel(false));
+                showTrapScript.BeginShowTrap();
             }
         }
 
         skillSelected = true;
     }
-
     public void EnableSelectSkill()
     { 
         skillSelected = false;
