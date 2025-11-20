@@ -16,6 +16,10 @@ public class ShowTrap : MonoBehaviour
     public float countDownTime = 5f;
     private float currentTime;
 
+    [Header("references đến các scripts")]
+    public SkillPanelUI skillPanelUI;
+    [SerializeField] private PathDrawer pathDrawer;
+
     public GameObject ShowTrapAt(int x, int y)
     {
         GameObject trapPos = gridManager.gridArray[x, y];
@@ -38,7 +42,8 @@ public class ShowTrap : MonoBehaviour
     }
 
     public void BeginShowTrap()
-    { 
+    {
+        DisableController();
         StartCoroutine(ShowAllTrap());
     }
 
@@ -78,6 +83,10 @@ public class ShowTrap : MonoBehaviour
             currentTime--;
         }
 
+        if(currentTime == 0)
+        {
+            skillPanelUI.ShowPanel();
+        }
         // Hide all trap sprites
         foreach (GameObject trapSprite in trapSprites)
         {
@@ -121,5 +130,21 @@ public class ShowTrap : MonoBehaviour
             yield return null;
         }
         countDownShowTrapText.transform.localScale = targetScale;
+    }
+    // sau khi hiển thị bẫy xong thì cho vẽ đường đi
+    public void EnableController() 
+    {
+        if (pathDrawer != null)
+        {
+            pathDrawer.enabled = true;
+        }
+    }
+    // trong khi hiển thị bẫy xong thì cho vẽ đường đi
+    public void DisableController()
+    {
+        if (pathDrawer != null)
+        {
+            pathDrawer.enabled = false;
+        }
     }
 }

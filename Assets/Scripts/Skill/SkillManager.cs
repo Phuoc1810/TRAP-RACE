@@ -7,18 +7,15 @@ public class SkillManager : MonoBehaviour
 
     public PlayerSkill playerSkill;
     [SerializeField] private SkillPanelUI skillPanelUI;
+    [SerializeField] private ShowTrap showTrap;
 
-    private void Update()
-    {
-        if (skillSelected)
-        {
-            skillPanelUI.HidePanel();
-        }
-    }
+
     public void SelecterSkill(string skillName)
     {
         if(skillSelected)
         {
+            skillPanelUI.HidePanel();
+            showTrap.EnableController();
             return;
         }
         currentSkill = skillName;

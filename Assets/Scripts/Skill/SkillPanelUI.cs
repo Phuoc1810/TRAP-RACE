@@ -11,9 +11,11 @@ public class SkillPanelUI : MonoBehaviour
 
     private Vector2 hiddenPos; //Vị trí dưới màn hình
     private Vector2 shownPos; //Vị trí chính giữa màn hình
+    private Vector2 targetPos;
 
     [SerializeField] private GameObject skillInforPanel;
     [SerializeField] private Text textInfor;
+    [SerializeField] Button[] skillButtons;
 
     [Header("Text Setting")]
     private float minAlpha = 0.3f;
@@ -21,6 +23,8 @@ public class SkillPanelUI : MonoBehaviour
     private float speedAlpha = 0.5f;
     private float alphaValue;
 
+    private bool isShowing = false;
+    private bool canClickButtons = false;
     private void Start()
     {
         hiddenPos =new Vector2(0, -582);
@@ -28,20 +32,22 @@ public class SkillPanelUI : MonoBehaviour
     }
     private void Update()
     {
+        targetPos = isShowing ? shownPos : hiddenPos;
         alphaValue = Mathf.PingPong(Time.time * speedAlpha, maxAlpha - minAlpha) + minAlpha;
+        ChangeButtonsState();
         ChangeAlphaValueForText();
     }
     public void ShowPanel()
     {
+        isShowing = true;
         skillPanel.gameObject.SetActive(true);
-        Vector2 targetPos = Vector2.Lerp(skillPanel.anchoredPosition, shownPos, speedPosition);
-        skillPanel.anchoredPosition = targetPos;
+        StartCoroutine(MovePanel());
         StartCoroutine(ShowInfor());
     }
     public void HidePanel()
     {
-        Vector2 targetPos = Vector2.Lerp(skillPanel.anchoredPosition, hiddenPos, speedPosition);
-        skillPanel.anchoredPosition = targetPos;
+        isShowing = false;
+        StartCoroutine(MovePanel());
         skillInforPanel.SetActive(false);
         //StartCoroutine(HideInfor());
     }
@@ -56,9 +62,29 @@ public class SkillPanelUI : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         skillInforPanel.SetActive(true);
     }
-    private IEnumerator HideInfor()
+    private IEnumerator MovePanel()
     {
-        yield return new WaitForSeconds(0.4f);
-        skillInforPanel.SetActive(false);
+        float duration = 2f;
+        float t = 0f;
+        Vector2 startPos = skillPanel.anchoredPosition;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            skillPanel.anchoredPosition = Vector2.Lerp(startPos, targetPos, t / duration);   
+            yield return null;
+        }
+
+        skillPanel.anchoredPosition = targetPos;
+        if(skillPanel.anchoredPosition == shownPos)
+        {
+            canClickButtons = true;
+        }
+    }
+    private void ChangeButtonsState()
+    {
+        foreach (Button btn in skillButtons)
+        {
+            btn.interactable = canClickButtons;
+        }
     }
 }
