@@ -47,6 +47,7 @@ MonoBehaviour:
   currentSkill: 
   playerSkill: {fileID: 0}
   skillPanelUI: {fileID: 8159327795042433535}
+  showTrap: {fileID: 0}
 --- !u!1 &980061012324483350
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2995569229028552513
 RectTransform:
   m_ObjectHideFlags: 0
@@ -293,7 +294,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -582}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &277416888351523751
@@ -347,9 +348,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillPanel: {fileID: 7207741887029695682}
-  speedPosition: 0.004
+  speedPosition: 0.008
   skillInforPanel: {fileID: 980061012324483350}
   textInfor: {fileID: 5606106678731005388}
+  skillButtons:
+  - {fileID: 4011535627344789399}
+  - {fileID: 976225754981188380}
+  - {fileID: 93828164064325591}
 --- !u!1 &3275980316457682835
 GameObject:
   m_ObjectHideFlags: 0

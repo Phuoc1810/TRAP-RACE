@@ -136,7 +136,7 @@ public class ShowTrap : MonoBehaviour
     {
         if (pathDrawer != null)
         {
-            pathDrawer.enabled = true;
+            pathDrawer.EnableDrawing();
         }
     }
     // trong khi hiển thị bẫy xong thì cho vẽ đường đi
@@ -144,7 +144,7 @@ public class ShowTrap : MonoBehaviour
     {
         if (pathDrawer != null)
         {
-            pathDrawer.enabled = false;
+            pathDrawer.DisableDrawing();
         }
     }
 }
