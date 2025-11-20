@@ -152,7 +152,8 @@ MonoBehaviour:
   HammerTrapSprite: {fileID: 8044374417404903714, guid: f6fd31de9bcfbc54bb1510395dc22ab3, type: 3}
   RockTrapSprite: {fileID: 8249901710586676417, guid: 832a7ec6840d3d34f96969b834ee185d, type: 3}
   countDownShowTrapText: {fileID: 955216192346893915}
-  countDownTime: 5
+  skillPanelUI: {fileID: 0}
+  pathDrawer: {fileID: 0}
 --- !u!1 &7003216914981481873
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: -103.6}
+  m_AnchoredPosition: {x: 0.000015258789, y: -90.8}
   m_SizeDelta: {x: 1055.6272, y: 94.6025}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4558136394541835386

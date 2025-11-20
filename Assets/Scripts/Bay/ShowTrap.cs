@@ -13,7 +13,7 @@ public class ShowTrap : MonoBehaviour
 
     [Header("Count down")]
     public Text countDownShowTrapText;
-    public float countDownTime = 5f;
+    //public float countDownTime = 5f;
     private float currentTime;
 
     [Header("references đến các scripts")]
@@ -44,10 +44,10 @@ public class ShowTrap : MonoBehaviour
     public void BeginShowTrap()
     {
         DisableController();
-        StartCoroutine(ShowAllTrap());
+        StartCoroutine(ShowAllTrap(5f));
     }
 
-    public IEnumerator ShowAllTrap()
+    public IEnumerator ShowAllTrap(float countDownTime)
     {
         //Show text
         countDownShowTrapText.gameObject.SetActive(true);
@@ -83,10 +83,6 @@ public class ShowTrap : MonoBehaviour
             currentTime--;
         }
 
-        if(currentTime == 0)
-        {
-            skillPanelUI.ShowPanel();
-        }
         // Hide all trap sprites
         foreach (GameObject trapSprite in trapSprites)
         {
@@ -97,6 +93,12 @@ public class ShowTrap : MonoBehaviour
         yield return StartCoroutine(ScaleText(new Vector3(0.5f, 0.5f, 0.5f)));
         countDownShowTrapText.text = "";
         countDownShowTrapText.gameObject.SetActive(false);
+
+        //Show skill panel
+        if (currentTime == 0)
+        {
+            skillPanelUI.ShowPanel();
+        }
 
         foreach (GameObject trapSprite in trapSprites)
         {
@@ -144,7 +146,7 @@ public class ShowTrap : MonoBehaviour
     {
         if (pathDrawer != null)
         {
-            pathDrawer.DisableDrawing();
+            StartCoroutine(pathDrawer.DisableDrawing());
         }
     }
 }

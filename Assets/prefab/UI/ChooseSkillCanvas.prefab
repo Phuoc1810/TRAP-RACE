@@ -355,6 +355,8 @@ MonoBehaviour:
   - {fileID: 4011535627344789399}
   - {fileID: 976225754981188380}
   - {fileID: 93828164064325591}
+  pathDrawer: {fileID: 0}
+  skillManager: {fileID: 587168768165184062}
 --- !u!1 &3275980316457682835
 GameObject:
   m_ObjectHideFlags: 0

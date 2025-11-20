@@ -14,8 +14,7 @@ public class SkillManager : MonoBehaviour
     {
         if(skillSelected)
         {
-            skillPanelUI.HidePanel();
-            showTrap.EnableController();
+            StartCoroutine(skillPanelUI.HidePanel(true));
             return;
         }
         currentSkill = skillName;
@@ -27,13 +26,24 @@ public class SkillManager : MonoBehaviour
             if (currentSkill == "Shield")
             {
                 playerSkill.ActivateShield();
+                StartCoroutine(skillPanelUI.HidePanel(true));
             }
             else if (currentSkill == "Shoes")
             {
                 playerSkill.shoesActive = true;
+                StartCoroutine(skillPanelUI.HidePanel(true));
+            }
+            else if (currentSkill == "Record Trap")
+            {
+                StartCoroutine(skillPanelUI.HidePanel(false));
             }
         }
 
         skillSelected = true;
+    }
+
+    public void EnableSelectSkill()
+    { 
+        skillSelected = false;
     }
 }
