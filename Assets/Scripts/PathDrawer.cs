@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PathDrawer : MonoBehaviour
 {
@@ -21,13 +22,21 @@ public class PathDrawer : MonoBehaviour
     public bool enableDrawing = false;
     private bool isDrawing = false;
 
+    [Header("UI")]
+    [SerializeField] private TextScale titleText;
+
     void Start()
     {
         mainCamera = Camera.main;
+        titleText.SetActiveText(false);
+        //DisableDrawing();
     }
 
     void Update()
     {
+        if (!enableDrawing)
+            return;
+
         // 1. Khi bắt đầu nhấn chuột
         if (Input.GetMouseButtonDown(0))
         {
@@ -258,11 +267,16 @@ public class PathDrawer : MonoBehaviour
 
     public void EnableDrawing()
     { 
+        titleText.SetActiveText(true);
+        titleText.SetScaleText(new Vector3(0.5f, 0.5f, 0.5f));
+        titleText.StartCoroutine(titleText.ScaleText(Vector3.one));
         enableDrawing = true;
     }
 
-    public void DisableDrawing()
+    public IEnumerator DisableDrawing()
     {
         enableDrawing = false;
+        yield return titleText.StartCoroutine(titleText.ScaleText(new Vector3(0.5f, 0.5f, 0.5f)));
+        titleText.SetActiveText(false);
     }
 }

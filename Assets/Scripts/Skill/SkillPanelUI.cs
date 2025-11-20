@@ -23,6 +23,10 @@ public class SkillPanelUI : MonoBehaviour
     private float speedAlpha = 0.5f;
     private float alphaValue;
 
+    [Header("References")]
+    [SerializeField] private PathDrawer pathDrawer;
+    [SerializeField] private SkillManager skillManager;
+
     private bool isShowing = false;
     private bool canClickButtons = false;
     private void Start()
@@ -40,15 +44,23 @@ public class SkillPanelUI : MonoBehaviour
     public void ShowPanel()
     {
         isShowing = true;
+        skillManager.EnableSelectSkill();
         skillPanel.gameObject.SetActive(true);
         StartCoroutine(MovePanel());
         StartCoroutine(ShowInfor());
     }
-    public void HidePanel()
+    public IEnumerator HidePanel(bool enableDrawing)
     {
         isShowing = false;
-        StartCoroutine(MovePanel());
+        canClickButtons = false;//Không cho bấm nút khi đang ẩn panel
         skillInforPanel.SetActive(false);
+        yield return StartCoroutine(MovePanel());
+
+        if (enableDrawing)
+        {
+            pathDrawer.EnableDrawing();
+        }
+
         //StartCoroutine(HideInfor());
     }
     private void ChangeAlphaValueForText()
@@ -64,7 +76,7 @@ public class SkillPanelUI : MonoBehaviour
     }
     private IEnumerator MovePanel()
     {
-        float duration = 2f;
+        float duration = 0.5f;
         float t = 0f;
         Vector2 startPos = skillPanel.anchoredPosition;
         while (t < duration)
