@@ -5,6 +5,7 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager instance;
     public Button startButton;
+    public GameObject optionsPanel;
     public GameObject settingPanel;
     public GameObject menuPanel;
     public bool isInGame;
@@ -32,25 +33,42 @@ public class MenuManager : MonoBehaviour
 
     public void BackToMenu()
     {
-        SettingPanelClose();
-        // start button appear
-        startButton.gameObject.SetActive(true);
-        TextMoving.instance.isInGame = false;
-        TextMoving.instance.TextMove();
+        if (TextMoving.instance.isInGame)
+        {
+            OptionsPanelClose();
+            // start button appear
+            startButton.gameObject.SetActive(true);
+            TextMoving.instance.isInGame = false;
+            TextMoving.instance.TextMove();
+        } else 
+            {
+            Debug.Log("Not in game");
+        }
     }
 
-    public void SettingPanelOpen()
+    public void OptionsPanelOpen()
     {
         // open setting panel
-        settingPanel.SetActive(true);
+        optionsPanel.SetActive(true);
         menuPanel.SetActive(false);
     }
 
-    public void SettingPanelClose()
+    public void OptionsPanelClose()
     {
         // close setting panel
-        settingPanel.SetActive(false);
+        optionsPanel.SetActive(false);
         menuPanel.SetActive(true);
+    }
+
+    public void SettingsPanelOpen()
+    {
+        settingPanel.SetActive(true);
+        optionsPanel.SetActive(false);
+    }
+    public void SettingPanelClose()
+    {
+        settingPanel.SetActive(false);
+        optionsPanel.SetActive(true);
     }
 }
    
