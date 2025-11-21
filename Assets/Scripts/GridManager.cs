@@ -358,6 +358,9 @@ public class GridManager : MonoBehaviour
 
         //5. Cho phép chọn kỹ năng lại
         skillManager.EnableSelectSkill();
+
+        //6. Reset kỹ năng của người chơi
+        playerMovement.gameObject.GetComponent<PlayerSkill>().ResetSkill();
     }
 
 

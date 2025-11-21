@@ -22,4 +22,12 @@ public class PlayerSkill : MonoBehaviour
         helmet.SetActive(false);
         helmetVisor.SetActive(false);
     }
+
+    public void ResetSkill()
+    { 
+        if(shieldActive)
+            DeActivateShield();
+        else if(shoesActive)
+            shoesActive = false;
+    }
 }

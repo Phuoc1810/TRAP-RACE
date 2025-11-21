@@ -262,6 +262,8 @@ public class PathDrawer : MonoBehaviour
         if (player != null)
         {
             player.FollowPath(new List<TileInfo>(confirmedPath)); // Gọi hàm di chuyển Player
+            // Sau khi di chuyển, tắt khả năng vẽ đường đi  
+            StartCoroutine(DisableDrawing());
         }
     }
 
