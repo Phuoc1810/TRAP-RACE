@@ -165,6 +165,7 @@ MonoBehaviour:
   spawnChance: 1
   mainCamera: {fileID: 963194227}
   playerMovement: {fileID: 200144732}
+  skillManager: {fileID: 0}
 --- !u!4 &189976230
 Transform:
   m_ObjectHideFlags: 0
@@ -195,6 +196,8 @@ MonoBehaviour:
   highlightColor: {r: 0, g: 1, b: 0, a: 1}
   player: {fileID: 200144732}
   gridManager: {fileID: 189976229}
+  enableDrawing: 1
+  titleText: {fileID: 0}
 --- !u!114 &200144732 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3409309086563523709, guid: 3d123777f28e871479a1b6f074a46200, type: 3}

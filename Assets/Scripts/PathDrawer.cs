@@ -28,7 +28,7 @@ public class PathDrawer : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        titleText.SetActiveText(false);
+        //titleText.SetActiveText(false);
         //DisableDrawing();
     }
 
