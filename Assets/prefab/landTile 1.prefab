@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 4336464804068254743}
   - component: {fileID: 4048368007085084684}
   m_Layer: 0
-  m_Name: landTile
-  m_TagString: LandTile
+  m_Name: landTile 1
+  m_TagString: CheckPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

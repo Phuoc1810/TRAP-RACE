@@ -13,6 +13,8 @@ TagManager:
   - BayBua
   - UsedStartPoint
   - ENDLINE
+  - Midpoint
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private int isMovingHash;
 
     public GridManager gridManager;
+    public MultiStageGridManager multiStageGridManager;
     private List<TileInfo> path = new List<TileInfo>();
     private int currentPathIndex = 0;
     /// <summary>
@@ -135,6 +136,35 @@ public class PlayerMovement : MonoBehaviour
                     yield break; // Hoàn thành Coroutine MoveAlongPath
                 }
             }
+            if (reachedTile.gameObject.CompareTag("Checkpoint"))
+            {
+                // Tìm Midpoint trong scene
+                GameObject midpoint = GameObject.FindGameObjectWithTag("Midpoint");
+                if (midpoint != null)
+                {
+                    StopAllCoroutines();
+                    // Di chuyển đến Checkpoint trước, sau đó nối tiếp đi Midpoint
+                    // Nhưng để đơn giản: Hãy đi thẳng đến Midpoint từ vị trí hiện tại (ô trước Checkpoint)
+                    // HOẶC: Đi đến Checkpoint (bằng MoveAlongPath) rồi mới đi Midpoint.
+
+                    // Cách mượt nhất: Chuyển target sang Midpoint luôn
+                    StartCoroutine(MoveToMidpointAndStop(midpoint.transform.position));
+                    yield break;
+                }
+            }
+
+            // 2. GẶP FINISH LINE -> TỰ ĐI ĐẾN EXIT POINT
+            if (reachedTile.gameObject.CompareTag("FinishLine"))
+            {
+                GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
+                if (exitPoint != null)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
+                    path.Clear();
+                    yield break;
+                }
+            }
         }
 
         // Nếu không phải FinishLine, tiếp tục đến Tile tiếp theo trong Path
@@ -155,12 +185,40 @@ public class PlayerMovement : MonoBehaviour
         }
 
         TileInfo nextTile = path[currentPathIndex];
+        //if (nextTile.gameObject.CompareTag("Checkpoint"))
+        //{
+        //    // Tìm Midpoint trong scene
+        //    GameObject midpoint = GameObject.FindGameObjectWithTag("Midpoint");
+        //    if (midpoint != null)
+        //    {
+        //        StopAllCoroutines();
+        //        // Di chuyển đến Checkpoint trước, sau đó nối tiếp đi Midpoint
+        //        // Nhưng để đơn giản: Hãy đi thẳng đến Midpoint từ vị trí hiện tại (ô trước Checkpoint)
+        //        // HOẶC: Đi đến Checkpoint (bằng MoveAlongPath) rồi mới đi Midpoint.
 
+        //        // Cách mượt nhất: Chuyển target sang Midpoint luôn
+        //        StartCoroutine(MoveToMidpointAndStop(midpoint.transform.position));
+        //        return;
+        //    }
+        //}
+
+        //// 2. GẶP FINISH LINE -> TỰ ĐI ĐẾN EXIT POINT
+        //if (nextTile.gameObject.CompareTag("FinishLine"))
+        //{
+        //    GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
+        //    if (exitPoint != null)
+        //    {
+        //        StopAllCoroutines();
+        //        StartCoroutine(MoveToExitPoint(exitPoint.transform.position));
+        //        path.Clear();
+        //        return;
+        //    }
+        //}
         // KIỂM TRA TỰ ĐỘNG CHUYỂN TIẾP (Chạm FinishLine)
         //if (nextTile != null && nextTile.gameObject.CompareTag("ENDLINE"))
         //{
-           
-           
+
+
         //        GameObject exitPoint = GameObject.FindGameObjectWithTag("ExitPoint");
 
         //        if (exitPoint != null)
@@ -172,12 +230,38 @@ public class PlayerMovement : MonoBehaviour
         //            count = 0;
         //            return;
         //        }
-            
+
         //}
 
         // Di chuyển bình thường
         currentMovementCoroutine = StartCoroutine(MoveAlongPath(nextTile.transform.position));
         currentPathIndex++; // Chỉ tăng index sau khi gọi thành công MoveAlongPath
+    }
+    private IEnumerator MoveToMidpointAndStop(Vector3 targetPosition)
+    {
+        isMoving = true;
+        targetPosition.y = transform.position.y; // Giữ độ cao
+
+        // Di chuyển
+        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+        {
+            Vector3 direction = (targetPosition - transform.position).normalized;
+            if (direction != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.deltaTime);
+            }
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        transform.position = targetPosition;
+
+        // DỪNG LẠI
+        isMoving = false;
+        playerAnimator.SetBool(isMovingHash, false);
+        path.Clear(); // Xóa đường đi cũ (Giai đoạn 1)
+
+        Debug.Log("Đã đến Midpoint. Người chơi có thể vẽ Giai đoạn 2.");
     }
     private IEnumerator MoveToExitPoint(Vector3 targetPosition)
     {
@@ -208,6 +292,10 @@ public class PlayerMovement : MonoBehaviour
             // Reset vị trí Player về (0, Y_offset, 0) của map mới
            
             gridManager.StartNextLevel();
+        }
+        if (multiStageGridManager != null)
+        {
+            multiStageGridManager.StartNextLevel();
         }
     }
 
