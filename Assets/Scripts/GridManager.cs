@@ -44,6 +44,9 @@ public class GridManager : MonoBehaviour
     private float totalZOffset = 0f;
     public SkillManager skillManager;
 
+    [Header("UI")]
+    public GameObject winPanel;
+
 
     void Start()
     {
