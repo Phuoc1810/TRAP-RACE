@@ -1659,6 +1659,10 @@ PrefabInstance:
       propertyPath: playerMovement
       value: 
       objectReference: {fileID: 891716444}
+    - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
+      propertyPath: scoreController
+      value: 
+      objectReference: {fileID: 89262718}
     - target: {fileID: 3414462453781138553, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
       propertyPath: m_Name
       value: GridManager
