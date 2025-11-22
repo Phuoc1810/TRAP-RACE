@@ -1309,10 +1309,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 587168768165184062, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: showTrap
-      value: 
-      objectReference: {fileID: 1416601447}
-    - target: {fileID: 587168768165184062, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
       propertyPath: playerSkill
       value: 
       objectReference: {fileID: 3846530581745324424}
@@ -1320,10 +1316,6 @@ PrefabInstance:
       propertyPath: showTrapScript
       value: 
       objectReference: {fileID: 1416601447}
-    - target: {fileID: 980061012324483350, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3275980316457682835, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
       propertyPath: m_Name
       value: ChooseSkillCanvas
@@ -1332,10 +1324,6 @@ PrefabInstance:
       propertyPath: pathDrawer
       value: 
       objectReference: {fileID: 189976231}
-    - target: {fileID: 8159327795042433535, guid: a0e0f92848f268a45a5a43f5e99e5b41, type: 3}
-      propertyPath: speedPosition
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

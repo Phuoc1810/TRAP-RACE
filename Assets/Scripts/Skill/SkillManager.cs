@@ -40,6 +40,10 @@ public class SkillManager : MonoBehaviour
             {
                 StartCoroutine(RecordTrap());
             }
+            else
+            {
+                StartCoroutine(skillPanelUI.HidePanel(true));
+            }
         }
 
         skillSelected = true;
