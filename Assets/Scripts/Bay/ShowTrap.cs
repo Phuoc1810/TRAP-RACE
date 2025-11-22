@@ -48,7 +48,7 @@ public class ShowTrap : MonoBehaviour
     public void BeginShowTrap()
     {
         DisableController();
-        StartCoroutine(ShowAllTrap(5f));
+        StartCoroutine(ShowAllTrap(LevelManager.Instance.levels[LevelManager.Instance.currentLevelIndex].showTrapTime));
     }
 
     public IEnumerator ShowAllTrap(float countDownTime)
