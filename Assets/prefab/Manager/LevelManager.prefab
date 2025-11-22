@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3380047640885393754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4030433043300983560}
+  - component: {fileID: 4633336443796840328}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4030433043300983560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3380047640885393754}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.000000014901161, y: 1, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4633336443796840328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3380047640885393754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e259d9419a3544ea2e869acdd22c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLevelIndex: 0
+  currentLevel: 1
+  levels:
+  - levelNumber: 1
+    trapCount: 2
+    trapTypes:
+    - HammerTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 
+  - levelNumber: 2
+    trapCount: 2
+    trapTypes:
+    - SpikeTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 
+  - levelNumber: 3
+    trapCount: 2
+    trapTypes:
+    - RockTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 
+  - levelNumber: 4
+    trapCount: 3
+    trapTypes:
+    - RockTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 
+  - levelNumber: 5
+    trapCount: 3
+    trapTypes:
+    - SpikeTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 6-10
+  - levelNumber: 6
+    trapCount: 2
+    trapTypes:
+    - RockTrap
+    - HammerTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 
+  - levelNumber: 7
+    trapCount: 2
+    trapTypes:
+    - SpikeTrap
+    - HammerTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 
+  - levelNumber: 4
+    trapCount: 2
+    trapTypes:
+    - SpikeTrap
+    - RockTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 
+  - levelNumber: 4
+    trapCount: 2
+    trapTypes:
+    - HammerTrap
+    - RockTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 
+  - levelNumber: 4
+    trapCount: 2
+    trapTypes:
+    - SpikeTrap
+    - HammerTrap
+    showTrapTime: 5
+    sceneNameOfNextLevel: 
