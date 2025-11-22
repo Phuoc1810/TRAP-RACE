@@ -321,6 +321,9 @@ public class GridManager : MonoBehaviour
     }
     public void StartNextLevel()
     {
+        //0. Tăng LEVEL, nếu level tiếp theo cần đổi scene thì đổi scene
+        LevelManager.Instance.LoadNextLevel();
+
         // 1. LẤY VỊ TRÍ NEO MỚI TỪ EXIT POINT CŨ
         GameObject oldExit = GameObject.FindGameObjectWithTag("ExitPoint");
 
