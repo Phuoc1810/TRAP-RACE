@@ -40,6 +40,11 @@ public class RockTrap : MonoBehaviour
             !isRockFalling &&
             Time.time - lastActivationTime > activationCooldown)
         {
+            if (CheckIfPlayerMoveToExitPoint(other))
+            {
+                return;
+            }
+
             Debug.Log("Kích hoạt bẫy - chỉ 1 cục đá được tạo");
             lastActivationTime = Time.time;
             ActivateTrap();
@@ -107,5 +112,18 @@ public class RockTrap : MonoBehaviour
         Vector3 spawnPosition = transform.position + rockSpawnOffset;
         Gizmos.DrawWireSphere(spawnPosition, 0.5f);
         Gizmos.DrawLine(transform.position, spawnPosition);
+    }
+
+    public bool CheckIfPlayerMoveToExitPoint(Collider other)
+    {
+        if (other.TryGetComponent<PlayerMovement>(out PlayerMovement playerMovement))
+        {
+            if (playerMovement.isMoveToExitPoint)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

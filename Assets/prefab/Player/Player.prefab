@@ -78,10 +78,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerYOffset: 0.5
   moveSpeed: 1
+  count: 0
   yOffset: 0.5
   exitPoint: {fileID: 0}
+  isMoveToExitPoint: 0
   playerAnimator: {fileID: 6267016123459606312}
   gridManager: {fileID: 0}
+  multiStageGridManager: {fileID: 0}
+  playerSkill: {fileID: 6275981885842061729}
 --- !u!114 &6275981885842061729
 MonoBehaviour:
   m_ObjectHideFlags: 0

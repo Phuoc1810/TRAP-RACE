@@ -8,7 +8,25 @@ public class HammerTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (CheckIfPlayerMoveToExitPoint(other))
+            {
+                return;
+            }
+
             hammer.ActivateHammer();
         }
+    }
+
+    public bool CheckIfPlayerMoveToExitPoint(Collider other)
+    {
+        if (other.TryGetComponent<PlayerMovement>(out PlayerMovement playerMovement))
+        {
+            if (playerMovement.isMoveToExitPoint)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
