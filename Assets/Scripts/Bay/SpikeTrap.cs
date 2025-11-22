@@ -35,6 +35,11 @@ public class SpikeTrap : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (CheckIfPlayerMoveToExitPoint(other))
+            {
+                return;
+            }
+
             playerInside = true;
         }
     }
@@ -45,5 +50,18 @@ public class SpikeTrap : MonoBehaviour
         {
             playerInside = false;
         }
+    }
+
+    public bool CheckIfPlayerMoveToExitPoint(Collider other)
+    {
+        if (other.TryGetComponent<PlayerMovement>(out PlayerMovement playerMovement))
+        {
+            if (playerMovement.isMoveToExitPoint)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

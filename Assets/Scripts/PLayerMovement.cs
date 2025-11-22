@@ -23,15 +23,20 @@ public class PlayerMovement : MonoBehaviour
 
     // Cờ (flag) để ngăn chặn các hành động khác khi đã thắng
     private bool hasReachedGoal = false;
+    // Cờ để kiểm tra việc di chuyển tự động đến ExitPoint
+    public bool isMoveToExitPoint = false;
 
     [Header("Animation")]
     public Animator playerAnimator;
     private int isMovingHash;
 
+    [Header("References")]
     public GridManager gridManager;
     public MultiStageGridManager multiStageGridManager;
     private List<TileInfo> path = new List<TileInfo>();
     private int currentPathIndex = 0;
+
+    public PlayerSkill playerSkill;
     /// <summary>
     /// Hàm này được PathDrawer gọi để bắt đầu di chuyển
     /// </summary>
@@ -265,7 +270,9 @@ public class PlayerMovement : MonoBehaviour
     }
     private IEnumerator MoveToExitPoint(Vector3 targetPosition)
     {
-       float targetGoundY = targetPosition.y;
+        isMoveToExitPoint = true;
+
+        float targetGoundY = targetPosition.y;
         Vector3 finalTargetPosition = targetPosition;
         finalTargetPosition.y = targetGoundY + 0.5f;
         while (Vector3.Distance(transform.position, finalTargetPosition) > 0.01f)
@@ -285,6 +292,8 @@ public class PlayerMovement : MonoBehaviour
         transform.position = finalTargetPosition;
         isMoving = false;
         playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
+
+        isMoveToExitPoint = false;
 
         // KÍCH HOẠT CHUYỂN CẤP ĐỘ
         if (gridManager != null)

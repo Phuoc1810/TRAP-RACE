@@ -156,9 +156,11 @@ MonoBehaviour:
   count: 0
   yOffset: 1
   exitPoint: {fileID: 1718728910}
+  isMoveToExitPoint: 0
   playerAnimator: {fileID: 0}
   gridManager: {fileID: 0}
   multiStageGridManager: {fileID: 0}
+  playerSkill: {fileID: 0}
 --- !u!136 &150153602
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -403,17 +405,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3007187c652b45244b035c946cfe25f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &463823267 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3476550514066230363, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-  m_PrefabInstance: {fileID: 1149501645}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d9b8870f30c34d4097db5f7d164b18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &593985284
@@ -1027,53 +1018,9 @@ PrefabInstance:
       value: Canvas GameOver
       objectReference: {fileID: 0}
     - target: {fileID: 3476550514066230363, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: winUI
-      value: 
-      objectReference: {fileID: 1291626532}
-    - target: {fileID: 3476550514066230363, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
       propertyPath: gridManager
       value: 
       objectReference: {fileID: 189976229}
-    - target: {fileID: 6570536675609032426, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7370497211342994870, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8724497483688303637, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8724497483688303637, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8724497483688303637, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 463823267}
-    - target: {fileID: 8724497483688303637, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8724497483688303637, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ContinueNextLevel
-      objectReference: {fileID: 0}
-    - target: {fileID: 8724497483688303637, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WinManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8724497483688303637, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 9146969157878534513, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1604,6 +1551,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
+      propertyPath: trapPrefab
+      value: 
+      objectReference: {fileID: 1258091148529363683, guid: eea261784435ba74cabb21124eb7eddb, type: 3}
     - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
       propertyPath: skillManager
       value: 

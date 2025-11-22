@@ -54,6 +54,7 @@ public class SkillPanelUI : MonoBehaviour
         canClickButtons = false;//Không cho bấm nút khi đang ẩn panel
         skillInforPanel.SetActive(false);
         yield return StartCoroutine(MovePanel());
+        skillPanel.gameObject.SetActive(false);
 
         if (enableDrawing)
         {
