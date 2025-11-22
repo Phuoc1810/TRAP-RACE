@@ -8,7 +8,7 @@ public class HammerTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (CheckIfPlayerMoveToExitPoint(other))
+            if (CheckIfPlayerMoveToExitPoint(other.gameObject))
             {
                 return;
             }
@@ -17,11 +17,13 @@ public class HammerTrigger : MonoBehaviour
         }
     }
 
-    public bool CheckIfPlayerMoveToExitPoint(Collider other)
+    public bool CheckIfPlayerMoveToExitPoint(GameObject other)
     {
-        if (other.TryGetComponent<PlayerMovement>(out PlayerMovement playerMovement))
+        var player = other.GetComponentInParent<PlayerMovement>();
+
+        if (player != null)
         {
-            if (playerMovement.isMoveToExitPoint)
+            if (player.isMoveToExitPoint)
             {
                 return true;
             }
