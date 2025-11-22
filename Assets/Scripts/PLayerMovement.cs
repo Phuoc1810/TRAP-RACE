@@ -291,7 +291,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Reset vị trí Player về (0, Y_offset, 0) của map mới
            
-            gridManager.StartNextLevel();
+            gridManager.winPanel.SetActive(true);
         }
         if (multiStageGridManager != null)
         {
