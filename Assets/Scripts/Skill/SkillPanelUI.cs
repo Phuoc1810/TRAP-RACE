@@ -29,6 +29,8 @@ public class SkillPanelUI : MonoBehaviour
 
     private bool isShowing = false;
     private bool canClickButtons = false;
+
+    public bool IsShowing => isShowing;
     private void Start()
     {
         hiddenPos =new Vector2(0, -582);
