@@ -43,6 +43,7 @@ public class GridManager : MonoBehaviour
     public PlayerMovement playerMovement;
     private float totalZOffset = 0f;
     public SkillManager skillManager;
+    public ScoreController scoreController;
 
     [Header("UI")]
     public GameObject winPanel;
@@ -365,7 +366,10 @@ public class GridManager : MonoBehaviour
         //5. Cho phép chọn kỹ năng lại
         skillManager.EnableSelectSkill();
 
-        //6. Reset kỹ năng của người chơi
+        //6. Reset điểm số
+        scoreController.ResetScore();
+
+        //7. Reset kỹ năng của người chơi
         playerMovement.playerSkill.ResetSkill();
     }
 

@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TestChar(Hieu).unity
+    path: Assets/Scenes/1-5.unity
     guid: 4a83b25c688358741a095a0657d5541c
   - enabled: 1
     path: Assets/Scenes/6-10.unity
-    guid: cc5eeefd14887584884c61b7c06e2009
+    guid: d995465d04025a44e8961f87cfe84337
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
