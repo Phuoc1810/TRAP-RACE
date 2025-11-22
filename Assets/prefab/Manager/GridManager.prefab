@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3414462453781138553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5058828355836411058}
+  - component: {fileID: 164467775878722022}
+  - component: {fileID: 8963688928269774916}
+  m_Layer: 0
+  m_Name: GridManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5058828355836411058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3414462453781138553}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &164467775878722022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3414462453781138553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480537f1c6b00a34eb8bda4be7849e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  landTilePrefab: {fileID: 4667979557171920011, guid: b58a14001751d204a8d7bb2458f96c98, type: 3}
+  width: 3
+  height: 3
+  spacing: 1
+  exitTilePrefab: {fileID: 4667979557171920011, guid: b58a14001751d204a8d7bb2458f96c98, type: 3}
+  exitPointPrefab: {fileID: 4012597027371602799, guid: 4ba0582f372e8464eb26dd28d3af6eb4, type: 3}
+  exitOffset: {x: 2, y: 0, z: 0}
+  spawnedExitTile: {fileID: 0}
+  trapPrefab: {fileID: 81908614582261311, guid: a0a3ef581e61c0a40bb953e6140bbf3d, type: 3}
+  numberOfTraps: 2
+  trapYOffset: 1
+  trapPositions: []
+  goalCoordinates: {x: 2, y: 2}
+  spawnChance: 1
+  mainCamera: {fileID: 0}
+  playerMovement: {fileID: 0}
+  skillManager: {fileID: 0}
+  winPanel: {fileID: 0}
+--- !u!114 &8963688928269774916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3414462453781138553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3007187c652b45244b035c946cfe25f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 0, g: 1, b: 0, a: 1}
+  player: {fileID: 0}
+  gridManager: {fileID: 164467775878722022}
+  enableDrawing: 0
+  titleText: {fileID: 0}
