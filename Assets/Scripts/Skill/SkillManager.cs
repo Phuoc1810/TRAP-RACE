@@ -10,12 +10,13 @@ public class SkillManager : MonoBehaviour
     public PlayerSkill playerSkill;
     [SerializeField] private SkillPanelUI skillPanelUI;
     [SerializeField] private ShowTrap showTrapScript;
+    [SerializeField] private ScoreController scoreController;
 
     public bool SkillSelected => skillSelected;
 
     public void SelecterSkill(string skillName)
     {
-        if(skillSelected)
+        if (skillSelected)
         {
             StartCoroutine(skillPanelUI.HidePanel(true));
             return;
@@ -30,15 +31,18 @@ public class SkillManager : MonoBehaviour
             {
                 playerSkill.ActivateShield();
                 StartCoroutine(skillPanelUI.HidePanel(true));
+                scoreController.DecreaseScoreWhenSelectorSkill();
             }
             else if (currentSkill == "Shoes")
             {
                 playerSkill.shoesActive = true;
                 StartCoroutine(skillPanelUI.HidePanel(true));
+                scoreController.DecreaseScoreWhenSelectorSkill();
             }
             else if (currentSkill == "Record Trap")
             {
                 StartCoroutine(RecordTrap());
+                scoreController.DecreaseScoreWhenSelectorSkill();
             }
             else
             {
