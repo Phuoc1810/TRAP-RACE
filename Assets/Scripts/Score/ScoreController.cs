@@ -19,6 +19,7 @@ public class ScoreController : MonoBehaviour
     void Start()
     {
         score = 100;
+        scoreText.gameObject.SetActive(false);
     }
     void Update()
     {
@@ -32,14 +33,17 @@ public class ScoreController : MonoBehaviour
     public void StartCountingScore()
     {
         isCouting = true;
+        scoreText.gameObject.SetActive(true);
     }
     public void StopCountingScore()
     {
         isCouting = false;
+        scoreText.gameObject.SetActive(false);
     }
     private void LateUpdate()
     {
-        scoreText.text = "Score: " + score + " " + totalTime;
+        int seconds = Mathf.FloorToInt(totalTime);
+        scoreText.text = seconds.ToString("00:00");
     }
    
     private void DeductScore()

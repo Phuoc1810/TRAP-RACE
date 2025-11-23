@@ -110,11 +110,18 @@ public class ShowTrap : MonoBehaviour
         //Thông báo cho GamePhaseManager
         if (skillManager != null && skillManager.SkillSelected == false)
         {
-            GamePhaseManager.Instance.CompleteShowTrap(); //Đang ở phase chọn kỹ năng
+            GamePhaseManager.Instance.CompleteShowTrap();
         }
         else
         {
-            GamePhaseManager.Instance.CompleteChooseSkill(); //Nếu chọn skill rôi (skillSelected = true) thì qua phase vẽ
+            if (skillManager.RecordTrapActive == false)
+            {
+                GamePhaseManager.Instance.CompleteChooseSkill();
+            }
+            else
+            {
+                GamePhaseManager.Instance.CompleteRecordTrap();
+            }
         }
     }
 

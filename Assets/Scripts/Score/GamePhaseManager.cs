@@ -5,6 +5,7 @@ public enum GamePhase //Phân loại các giai đoạn trong game và quản lý
 {
     ShowTraps,
     ChosseSkill,
+    RecordTrap,
     Draw,
     Move
 }
@@ -48,6 +49,9 @@ public class GamePhaseManager : MonoBehaviour
             case GamePhase.ChosseSkill:
                 skillPanelUI.ShowPanel();
                 break;
+            case GamePhase.RecordTrap:
+                skillPanelUI.HidePanel(true);
+                break;
             case GamePhase.Draw:
                 pathDrawer.EnableDrawing();
                 scoreController.StartCountingScore();
@@ -62,6 +66,10 @@ public class GamePhaseManager : MonoBehaviour
     public void CompleteShowTrap()
     {
         ChangePhase(GamePhase.ChosseSkill);
+    }
+    public void CompleteRecordTrap()
+    {
+        ChangePhase(GamePhase.RecordTrap);
     }
     public void CompleteChooseSkill()
     {
