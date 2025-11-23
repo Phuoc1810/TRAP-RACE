@@ -22,8 +22,6 @@ public class PathDrawer : MonoBehaviour
     public bool enableDrawing = false;
     private bool isDrawing = false;
 
-    private bool isCompleteDrawing = false;
-    public bool drawing => isCompleteDrawing;
     [Header("UI")]
     [SerializeField] private TextScale titleText;
 
@@ -109,7 +107,8 @@ public class PathDrawer : MonoBehaviour
     void StopDrawing()
     {
         isDrawing = false;
-        isCompleteDrawing = true;
+        //Thong bao cho GamePhaseManager
+        GamePhaseManager.Instance.CompleteDraw();
 
         // Chuyển đường đi tạm thời (currentPath) thành đường đi đã xác nhận (confirmedPath)
         confirmedPath = new List<TileInfo>(currentPath);
@@ -265,6 +264,8 @@ public class PathDrawer : MonoBehaviour
         if (player != null)
         {
             player.FollowPath(new List<TileInfo>(confirmedPath)); // Gọi hàm di chuyển Player
+
+            GamePhaseManager.Instance.
             // Sau khi di chuyển, tắt khả năng vẽ đường đi  
             StartCoroutine(DisableDrawing());
         }

@@ -41,6 +41,8 @@ public class SkillManager : MonoBehaviour
             }
             else if (currentSkill == "Record Trap")
             {
+                //Thông báo cho GamePhaseManager
+                GamePhaseManager.Instance.CompleteShowTrap();
                 StartCoroutine(RecordTrap());
                 scoreController.DecreaseScoreWhenSelectorSkill();
             }

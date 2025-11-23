@@ -62,7 +62,8 @@ public class SkillPanelUI : MonoBehaviour
         {
             pathDrawer.EnableDrawing();
         }
-
+        //Thông báo cho GamePhaseManager
+        GamePhaseManager.Instance.CompleteChooseSkill();
         //StartCoroutine(HideInfor());
     }
     private void ChangeAlphaValueForText()
