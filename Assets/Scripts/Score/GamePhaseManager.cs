@@ -79,5 +79,10 @@ public class GamePhaseManager : MonoBehaviour
     {
         ChangePhase(GamePhase.Move);
     }
+
+    public void ChangePhaseToShowTrap()
+    {
+        ChangePhase(GamePhase.ShowTraps);
+    }
     #endregion 
 }
