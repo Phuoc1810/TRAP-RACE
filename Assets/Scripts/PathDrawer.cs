@@ -263,7 +263,6 @@ public class PathDrawer : MonoBehaviour
         {
             player.FollowPath(new List<TileInfo>(confirmedPath)); // Gọi hàm di chuyển Player
 
-            GamePhaseManager.Instance.
             // Sau khi di chuyển, tắt khả năng vẽ đường đi  
             StartCoroutine(DisableDrawing());
         }

@@ -1676,6 +1676,10 @@ PrefabInstance:
       propertyPath: exitPoint
       value: 
       objectReference: {fileID: 1718728910}
+    - target: {fileID: 3409309086563523709, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
+      propertyPath: gridManager
+      value: 
+      objectReference: {fileID: 189976229}
     - target: {fileID: 5120993329749466953, guid: 3d123777f28e871479a1b6f074a46200, type: 3}
       propertyPath: m_Name
       value: Player

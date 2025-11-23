@@ -46,7 +46,6 @@ public class ShowTrap : MonoBehaviour
     public void BeginShowTrap()
     {
         DisableController();
-        GamePhaseManager.Instance.ChangePhaseToShowTrap();
         StartCoroutine(ShowAllTrap(LevelManager.Instance.levels[LevelManager.Instance.currentLevelIndex].showTrapTime));
     }
 
