@@ -1546,14 +1546,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4633336443796840328, guid: 5d8f97201a483aa4696ebb8c6bbda77a, type: 3}
-      propertyPath: levels.Array.data[4].sceneNameOfNextLevel
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4633336443796840328, guid: 5d8f97201a483aa4696ebb8c6bbda77a, type: 3}
-      propertyPath: levels.Array.data[5].sceneNameOfNextLevel
-      value: 6-10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1647,10 +1639,6 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 963194227}
-    - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
-      propertyPath: trapPrefab
-      value: 
-      objectReference: {fileID: 1258091148529363683, guid: eea261784435ba74cabb21124eb7eddb, type: 3}
     - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
       propertyPath: skillManager
       value: 
