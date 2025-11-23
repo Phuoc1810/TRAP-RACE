@@ -6,7 +6,12 @@ public class ScoreController : MonoBehaviour
     public int score { get; private set; }
     private float totalTime = 0; //Biến thời gian xác định chuyển phase
     private float intervalTimer = 0; //Xác định thời gian trừ điểm theo phase
+    [SerializeField] private Text timeText;
     [SerializeField] private Text scoreText;
+
+    [SerializeField] private GameObject highScorePanel;
+    [SerializeField] private GameObject midScorePanel;
+    [SerializeField] private GameObject lowScorePanel;
 
     private bool isCouting = false; //Bật/ tắt tính điểm
     public enum ScorePhase
@@ -19,7 +24,7 @@ public class ScoreController : MonoBehaviour
     void Start()
     {
         score = 100;
-        scoreText.gameObject.SetActive(false);
+        timeText.gameObject.SetActive(false);
     }
     void Update()
     {
@@ -33,17 +38,18 @@ public class ScoreController : MonoBehaviour
     public void StartCountingScore()
     {
         isCouting = true;
-        scoreText.gameObject.SetActive(true);
+        timeText.gameObject.SetActive(true);
     }
     public void StopCountingScore()
     {
         isCouting = false;
-        scoreText.gameObject.SetActive(false);
+        timeText.gameObject.SetActive(false);
     }
     private void LateUpdate()
     {
         int seconds = Mathf.FloorToInt(totalTime);
-        scoreText.text = seconds.ToString("00:00");
+        timeText.text = seconds.ToString("00:00");
+        scoreText.text = "Score: " + score.ToString();
     }
    
     private void DeductScore()
@@ -69,6 +75,13 @@ public class ScoreController : MonoBehaviour
                 score = Mathf.Max(score, 0);
                 intervalTimer = 0;
             }
+        }
+    }
+    private void Rating()
+    {
+        switch (score)
+        {
+            
         }
     }
     public void DecreaseScoreWhenSelectorSkill()

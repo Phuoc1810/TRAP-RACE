@@ -33,7 +33,7 @@ public class SkillPanelUI : MonoBehaviour
     public bool IsShowing => isShowing;
     private void Start()
     {
-        hiddenPos =new Vector2(0, -582);
+        hiddenPos =new Vector2(0, -482);
         shownPos = new Vector2(0, 0);
     }
     private void Update()
