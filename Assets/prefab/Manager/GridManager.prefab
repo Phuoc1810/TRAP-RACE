@@ -53,7 +53,10 @@ MonoBehaviour:
   exitPointPrefab: {fileID: 4012597027371602799, guid: 4ba0582f372e8464eb26dd28d3af6eb4, type: 3}
   exitOffset: {x: 2, y: 0, z: 0}
   spawnedExitTile: {fileID: 0}
-  trapPrefab: {fileID: 81908614582261311, guid: a0a3ef581e61c0a40bb953e6140bbf3d, type: 3}
+  trapPrefabs:
+  - {fileID: 1258091148529363683, guid: eea261784435ba74cabb21124eb7eddb, type: 3}
+  - {fileID: 81908614582261311, guid: a0a3ef581e61c0a40bb953e6140bbf3d, type: 3}
+  - {fileID: 4061504602202053242, guid: 621b9ff90c90eaa40af82981b2697e90, type: 3}
   numberOfTraps: 2
   trapYOffset: 1
   trapPositions: []
@@ -62,6 +65,7 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   playerMovement: {fileID: 0}
   skillManager: {fileID: 0}
+  scoreController: {fileID: 0}
   winPanel: {fileID: 0}
 --- !u!114 &8963688928269774916
 MonoBehaviour:
