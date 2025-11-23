@@ -58,7 +58,7 @@ public class GridManager : MonoBehaviour
         goalCoordinates.y = height - 1;
 
         // Đảm bảo số bẫy không vượt quá số ô trống
-        numberOfTraps = Mathf.Min(numberOfTraps, (width * height) - 1);
+        numberOfTraps = Mathf.Min(LevelManager.Instance.levels[LevelManager.Instance.currentLevelIndex].trapCount, (width * height) - 1);
 
         // 2. KHỞI TẠO VÀ SPAWN LƯỚI
         gridArray = new GameObject[width, height];
@@ -229,6 +229,8 @@ public class GridManager : MonoBehaviour
         // 3. Spawn bẫy nếu hợp lệ
         if (foundValid)
         {
+            trapPositions = new List<Vector2Int>(chosenTrapLocations);
+
             foreach (Vector2Int coords in chosenTrapLocations)
             {
                 // Tính toán vị trí thế giới (Có tính đến totalZOffset)
@@ -248,6 +250,7 @@ public class GridManager : MonoBehaviour
                 {
                     trapObj.transform.SetParent(gridArray[coords.x, coords.y].transform);
                 }
+
             }
             Debug.Log($"Đã spawn {trapsToSpawn} bẫy.");
         }

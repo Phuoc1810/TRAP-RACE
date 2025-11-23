@@ -1466,7 +1466,7 @@ Transform:
   m_GameObject: {fileID: 1718728906}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8179, y: -0.1, z: 3}
+  m_LocalPosition: {x: 0.8179, y: -0.1, z: 4}
   m_LocalScale: {x: 4.694659, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1640,6 +1640,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
+      propertyPath: height
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
       propertyPath: winPanel
       value: 
       objectReference: {fileID: 1291626532}
@@ -1659,6 +1663,22 @@ PrefabInstance:
       propertyPath: playerMovement
       value: 
       objectReference: {fileID: 891716444}
+    - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
+      propertyPath: trapPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
+      propertyPath: 'trapPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1258091148529363683, guid: eea261784435ba74cabb21124eb7eddb, type: 3}
+    - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
+      propertyPath: 'trapPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 81908614582261311, guid: a0a3ef581e61c0a40bb953e6140bbf3d, type: 3}
+    - target: {fileID: 164467775878722022, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
+      propertyPath: 'trapPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 4061504602202053242, guid: 621b9ff90c90eaa40af82981b2697e90, type: 3}
     - target: {fileID: 3414462453781138553, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
       propertyPath: m_Name
       value: GridManager
