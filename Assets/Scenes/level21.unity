@@ -169,12 +169,17 @@ MonoBehaviour:
   midpointPrefab: {fileID: 7726221442761917916, guid: d50349db256ca6043b66cf69e03daa6b, type: 3}
   finishLinePrefab: {fileID: 4667979557171920011, guid: f698a55feb7ec124398421077244cc6c, type: 3}
   exitPointPrefab: {fileID: 4012597027371602799, guid: 4ba0582f372e8464eb26dd28d3af6eb4, type: 3}
+  trapPrefabs:
+  - {fileID: 268181897564380026, guid: 8bbd6faee8bd6364296b63cb0b0ac897, type: 3}
+  - {fileID: 268181897564380026, guid: 73f770ac1d3292147b43782a21d473c4, type: 3}
   width: 3
   height: 3
   spacing: 1
   gapBetweenStages: 1
   mainCamera: {fileID: 963194227}
   cameraMoveDuration: 1.5
+  trapsPerStage: 3
+  trapYOffset: 0.5
 --- !u!114 &350682827
 MonoBehaviour:
   m_ObjectHideFlags: 0

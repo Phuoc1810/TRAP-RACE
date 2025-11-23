@@ -157,8 +157,10 @@ MonoBehaviour:
   exitPointPrefab: {fileID: 4012597027371602799, guid: 4ba0582f372e8464eb26dd28d3af6eb4, type: 3}
   exitOffset: {x: 2, y: 0, z: 0}
   spawnedExitTile: {fileID: 0}
-  trapPrefab: {fileID: 268181897564380026, guid: 8bbd6faee8bd6364296b63cb0b0ac897, type: 3}
-  numberOfTraps: 2
+  trapPrefabs:
+  - {fileID: 268181897564380026, guid: 73f770ac1d3292147b43782a21d473c4, type: 3}
+  - {fileID: 268181897564380026, guid: 8bbd6faee8bd6364296b63cb0b0ac897, type: 3}
+  numberOfTraps: 3
   trapYOffset: 1
   trapPositions: []
   goalCoordinates: {x: 2, y: 2}
