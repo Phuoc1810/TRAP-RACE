@@ -334,7 +334,7 @@ public class GridManager : MonoBehaviour
         if (mainCamera != null)
         {
             // Tính toán tâm Z mới: Z_bắt đầu + nửa chiều dài map
-            Vector3 newCenter = new Vector3((width - 1) * spacing / 2f,
+            Vector3 newCenter = new Vector3(6.77f,//HOẶC (width - 1) * spacing / 2f
                                             mainCamera.transform.position.y,
                                             totalZOffset + (height - 1) * spacing / 2f);
 
