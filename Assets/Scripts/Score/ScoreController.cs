@@ -7,11 +7,8 @@ public class ScoreController : MonoBehaviour
     private float totalTime = 0; //Biến thời gian xác định chuyển phase
     private float intervalTimer = 0; //Xác định thời gian trừ điểm theo phase
     [SerializeField] private Text scoreText;
-    private bool changePhase = false;
 
-    [SerializeField] private PathDrawer drawer;
-    [SerializeField] private SkillPanelUI skillPanelUI;
-    [SerializeField] private ShowTrap showTrap;
+    private bool isCouting = false; //Bật/ tắt tính điểm
     public enum ScorePhase
     {
         EarlyPhase,
@@ -22,28 +19,39 @@ public class ScoreController : MonoBehaviour
     void Start()
     {
         score = 100;
+        scoreText.gameObject.SetActive(false);
     }
     void Update()
     {
-        if(drawer.drawing == false && skillPanelUI.IsShowing == false && showTrap.IsShowingTraps == false)
+        if(isCouting)
         {
             totalTime += Time.deltaTime;
             intervalTimer += Time.deltaTime;
-            SetPhase();
+            DeductScore();
         }
+    }
+    public void StartCountingScore()
+    {
+        isCouting = true;
+        scoreText.gameObject.SetActive(true);
+    }
+    public void StopCountingScore()
+    {
+        isCouting = false;
+        scoreText.gameObject.SetActive(false);
     }
     private void LateUpdate()
     {
-        scoreText.text = "Score: " + score;
+        int seconds = Mathf.FloorToInt(totalTime);
+        scoreText.text = seconds.ToString("00:00");
     }
    
-    private void SetPhase()
+    private void DeductScore()
     {
         if (phase == ScorePhase.EarlyPhase)
         {
             if(totalTime > 5f)
             {
-                changePhase = true;
                 phase = ScorePhase.LatePhase;
             }
             if(intervalTimer >= 5f)
@@ -70,7 +78,6 @@ public class ScoreController : MonoBehaviour
     }
     public void ResetScore()
     {
-        changePhase = false;
         phase = ScorePhase.EarlyPhase;
         score = 100;
         totalTime = 0;

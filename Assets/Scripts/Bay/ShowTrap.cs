@@ -21,8 +21,6 @@ public class ShowTrap : MonoBehaviour
     [SerializeField] private PathDrawer pathDrawer;
     [SerializeField] private SkillManager skillManager;
 
-    private bool isShowingTraps = false;
-    public bool IsShowingTraps => isShowingTraps;
 
     public GameObject ShowTrapAt(int x, int y)
     {
@@ -53,7 +51,6 @@ public class ShowTrap : MonoBehaviour
 
     public IEnumerator ShowAllTrap(float countDownTime)
     {
-        isShowingTraps = true;
         //Show text
         countDownShowTrapText.gameObject.SetActive(true);
         countDownShowTrapText.text = "Traps will be hidden in: " + countDownTime;
@@ -109,7 +106,23 @@ public class ShowTrap : MonoBehaviour
         {
             Destroy(trapSprite);
         }
-        isShowingTraps = false;
+
+        //Thông báo cho GamePhaseManager
+        if (skillManager != null && skillManager.SkillSelected == false)
+        {
+            GamePhaseManager.Instance.CompleteShowTrap();
+        }
+        else
+        {
+            if (skillManager.RecordTrapActive == false)
+            {
+                GamePhaseManager.Instance.CompleteChooseSkill();
+            }
+            else
+            {
+                GamePhaseManager.Instance.CompleteRecordTrap();
+            }
+        }
     }
 
     public IEnumerator ScaleSprite(GameObject sprite, Vector3 targetScale)

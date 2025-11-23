@@ -6,6 +6,7 @@ public class SkillManager : MonoBehaviour
 {
     public string currentSkill; //Lưu kĩ năng hiện tại
     private bool skillSelected = false;
+    private bool recordTrapActive = false;
 
     public PlayerSkill playerSkill;
     [SerializeField] private SkillPanelUI skillPanelUI;
@@ -13,6 +14,7 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private ScoreController scoreController;
 
     public bool SkillSelected => skillSelected;
+    public bool RecordTrapActive => recordTrapActive;
 
     public void SelecterSkill(string skillName)
     {
@@ -32,17 +34,21 @@ public class SkillManager : MonoBehaviour
                 playerSkill.ActivateShield();
                 StartCoroutine(skillPanelUI.HidePanel(true));
                 scoreController.DecreaseScoreWhenSelectorSkill();
+                GamePhaseManager.Instance.CompleteChooseSkill();
             }
             else if (currentSkill == "Shoes")
             {
                 playerSkill.shoesActive = true;
                 StartCoroutine(skillPanelUI.HidePanel(true));
                 scoreController.DecreaseScoreWhenSelectorSkill();
+                GamePhaseManager.Instance.CompleteChooseSkill();
             }
             else if (currentSkill == "Record Trap")
             {
+                recordTrapActive = true;
                 StartCoroutine(RecordTrap());
                 scoreController.DecreaseScoreWhenSelectorSkill();
+                recordTrapActive = false;
             }
             else
             {
@@ -62,5 +68,7 @@ public class SkillManager : MonoBehaviour
         yield return StartCoroutine(skillPanelUI.HidePanel(false));
         yield return StartCoroutine(showTrapScript.ShowAllTrap(3f));
         showTrapScript.EnableController();
+
+        
     }
 }
