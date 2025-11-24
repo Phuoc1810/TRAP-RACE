@@ -13,6 +13,7 @@ public class ScoreController : MonoBehaviour
     [SerializeField] private GameObject midScorePanel;
     [SerializeField] private GameObject lowScorePanel;
 
+    [SerializeField] private GameObject panelWin;
     private bool isCouting = false; //Bật/ tắt tính điểm
     public enum ScorePhase
     {
@@ -25,6 +26,7 @@ public class ScoreController : MonoBehaviour
     {
         score = 100;
         timeText.gameObject.SetActive(false);
+        panelWin.SetActive(false);
     }
     void Update()
     {
@@ -34,6 +36,7 @@ public class ScoreController : MonoBehaviour
             intervalTimer += Time.deltaTime;
             DeductScore();
         }
+
     }
     public void StartCountingScore()
     {
@@ -50,6 +53,8 @@ public class ScoreController : MonoBehaviour
         int seconds = Mathf.FloorToInt(totalTime);
         timeText.text = seconds.ToString("00:00");
         scoreText.text = "Score: " + score.ToString();
+
+        Rating();
     }
    
     private void DeductScore()
@@ -79,10 +84,26 @@ public class ScoreController : MonoBehaviour
     }
     private void Rating()
     {
-        switch (score)
+        if (score >= 70)
         {
-            
+            highScorePanel.SetActive(true);
+            midScorePanel.SetActive(false);
+            lowScorePanel.SetActive(false);
         }
+        else if (score >= 50 && score < 70)
+        {
+            highScorePanel.SetActive(false);
+            midScorePanel.SetActive(true);
+            lowScorePanel.SetActive(false);
+        }
+        else
+        {
+            highScorePanel.SetActive(false);
+            midScorePanel.SetActive(false);
+            lowScorePanel.SetActive(true);
+        }
+
+        scoreText.text = "Score: " + score.ToString();
     }
     public void DecreaseScoreWhenSelectorSkill()
     {
@@ -95,5 +116,10 @@ public class ScoreController : MonoBehaviour
         score = 100;
         totalTime = 0;
         intervalTimer = 0;
+    }
+
+    public void ShowWinPanel()
+    {
+        panelWin.SetActive(true);
     }
 }
