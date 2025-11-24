@@ -176,17 +176,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 189976231}
     - target: {fileID: 6466251639242629239, guid: c95103b41331f3c44835a67466f9c245, type: 3}
+      propertyPath: panelWin
+      value: 
+      objectReference: {fileID: 1291626532}
+    - target: {fileID: 6466251639242629239, guid: c95103b41331f3c44835a67466f9c245, type: 3}
       propertyPath: showTrap
       value: 
       objectReference: {fileID: 1416601447}
     - target: {fileID: 6466251639242629239, guid: c95103b41331f3c44835a67466f9c245, type: 3}
-      propertyPath: scoreText
+      propertyPath: timeText
       value: 
       objectReference: {fileID: 6190344600052078831}
+    - target: {fileID: 6466251639242629239, guid: c95103b41331f3c44835a67466f9c245, type: 3}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 1149501649}
     - target: {fileID: 6466251639242629239, guid: c95103b41331f3c44835a67466f9c245, type: 3}
       propertyPath: skillPanelUI
       value: 
       objectReference: {fileID: 1784303289}
+    - target: {fileID: 6466251639242629239, guid: c95103b41331f3c44835a67466f9c245, type: 3}
+      propertyPath: lowScorePanel
+      value: 
+      objectReference: {fileID: 1149501646}
+    - target: {fileID: 6466251639242629239, guid: c95103b41331f3c44835a67466f9c245, type: 3}
+      propertyPath: midScorePanel
+      value: 
+      objectReference: {fileID: 1149501647}
+    - target: {fileID: 6466251639242629239, guid: c95103b41331f3c44835a67466f9c245, type: 3}
+      propertyPath: highScorePanel
+      value: 
+      objectReference: {fileID: 1149501648}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1183,6 +1203,32 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+--- !u!1 &1149501646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1917284680003379352, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+  m_PrefabInstance: {fileID: 1149501645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1149501647 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7966028001753063265, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+  m_PrefabInstance: {fileID: 1149501645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1149501648 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3721995241285927879, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+  m_PrefabInstance: {fileID: 1149501645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1149501649 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7223374778417544143, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+  m_PrefabInstance: {fileID: 1149501645}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1171581206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1993,6 +2039,10 @@ PrefabInstance:
     - target: {fileID: 3818963539552542683, guid: edd8cef74d81333408167a6c1aa70215, type: 3}
       propertyPath: m_Name
       value: DrawingCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7548630941425515311, guid: edd8cef74d81333408167a6c1aa70215, type: 3}
+      propertyPath: m_Name
+      value: Time
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
