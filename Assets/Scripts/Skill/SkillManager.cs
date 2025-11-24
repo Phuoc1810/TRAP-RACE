@@ -53,6 +53,7 @@ public class SkillManager : MonoBehaviour
             else
             {
                 StartCoroutine(skillPanelUI.HidePanel(true));
+                GamePhaseManager.Instance.CompleteChooseSkill();
             }
         }
 
