@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 432420654476717671}
   - component: {fileID: 1710800565378115319}
   m_Layer: 5
-  m_Name: Score
+  m_Name: Time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
