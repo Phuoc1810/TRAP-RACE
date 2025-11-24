@@ -6,8 +6,14 @@ public class ScoreController : MonoBehaviour
     public int score { get; private set; }
     private float totalTime = 0; //Biến thời gian xác định chuyển phase
     private float intervalTimer = 0; //Xác định thời gian trừ điểm theo phase
+    [SerializeField] private Text timeText;
     [SerializeField] private Text scoreText;
 
+    [SerializeField] private GameObject highScorePanel;
+    [SerializeField] private GameObject midScorePanel;
+    [SerializeField] private GameObject lowScorePanel;
+
+    [SerializeField] private GameObject panelWin;
     private bool isCouting = false; //Bật/ tắt tính điểm
     public enum ScorePhase
     {
@@ -19,7 +25,8 @@ public class ScoreController : MonoBehaviour
     void Start()
     {
         score = 100;
-        scoreText.gameObject.SetActive(false);
+        timeText.gameObject.SetActive(false);
+        panelWin.SetActive(false);
     }
     void Update()
     {
@@ -29,21 +36,25 @@ public class ScoreController : MonoBehaviour
             intervalTimer += Time.deltaTime;
             DeductScore();
         }
+
     }
     public void StartCountingScore()
     {
         isCouting = true;
-        scoreText.gameObject.SetActive(true);
+        timeText.gameObject.SetActive(true);
     }
     public void StopCountingScore()
     {
         isCouting = false;
-        scoreText.gameObject.SetActive(false);
+        timeText.gameObject.SetActive(false);
     }
     private void LateUpdate()
     {
         int seconds = Mathf.FloorToInt(totalTime);
-        scoreText.text = seconds.ToString("00:00");
+        timeText.text = seconds.ToString("00:00");
+        scoreText.text = "Score: " + score.ToString();
+
+        Rating();
     }
    
     private void DeductScore()
@@ -71,6 +82,29 @@ public class ScoreController : MonoBehaviour
             }
         }
     }
+    private void Rating()
+    {
+        if (score >= 70)
+        {
+            highScorePanel.SetActive(true);
+            midScorePanel.SetActive(false);
+            lowScorePanel.SetActive(false);
+        }
+        else if (score >= 50 && score < 70)
+        {
+            highScorePanel.SetActive(false);
+            midScorePanel.SetActive(true);
+            lowScorePanel.SetActive(false);
+        }
+        else
+        {
+            highScorePanel.SetActive(false);
+            midScorePanel.SetActive(false);
+            lowScorePanel.SetActive(true);
+        }
+
+        scoreText.text = "Score: " + score.ToString();
+    }
     public void DecreaseScoreWhenSelectorSkill()
     {
         score -= 20;
@@ -82,5 +116,10 @@ public class ScoreController : MonoBehaviour
         score = 100;
         totalTime = 0;
         intervalTimer = 0;
+    }
+
+    public void ShowWinPanel()
+    {
+        panelWin.SetActive(true);
     }
 }
