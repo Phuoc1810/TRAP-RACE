@@ -28,15 +28,15 @@ public class ShowTrap : MonoBehaviour
         GameObject trapSprite = null;
         if (trapPos.transform.GetChild(0).TryGetComponent<HammerTrigger>(out HammerTrigger hammer))
         {
-            trapSprite = Instantiate(HammerTrapSprite, trapPos.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            trapSprite = Instantiate(HammerTrapSprite, trapPos.transform.position + new Vector3(0, 0.6f, 0), Quaternion.identity);
         }
         else if (trapPos.transform.GetChild(0).TryGetComponent<RockTrap>(out RockTrap rockTrap))
         {
-            trapSprite = Instantiate(RockTrapSprite, trapPos.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            trapSprite = Instantiate(RockTrapSprite, trapPos.transform.position + new Vector3(0, 0.6f, 0), Quaternion.identity);
         }
         else if (trapPos.transform.GetChild(0).TryGetComponent<SpikeTrap>(out SpikeTrap spikeTrap))
         {
-            trapSprite = Instantiate(spikeTrapSprite, trapPos.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            trapSprite = Instantiate(spikeTrapSprite, trapPos.transform.position + new Vector3(0, 0.6f, 0), Quaternion.identity);
         }
 
         trapSprite.transform.localScale = Vector3.zero;
