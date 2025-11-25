@@ -357,6 +357,40 @@ public class GridManager : MonoBehaviour
         showTrap.BeginShowTrap();
     }
 
+    public void ResetLevel()
+    {
+        // 1. LẤY VỊ TRÍ BAN ĐẦU VÀ TRẢ NHÂN VẬT VỀ ĐÓ
+        Vector3 startPosition = new Vector3(0, 0.5f, totalZOffset); // Giả sử Start luôn ở (0,0) với offset Z hiện tại
+        playerMovement.transform.position = startPosition;
+
+        // 2. PHÁ HỦY MAP HIỆN TẠI VÀ TẠO LẠI
+        DestroyCurrentGrid();
+        gridArray = null;
+        spawnPositions.Clear();
+        Start(); // Gọi lại Start() để spawn grid mới ở vị trí totalZOffset
+
+        // 3. KÉO CAMERA VỀ VỊ TRÍ BAN ĐẦU
+        if (mainCamera != null)
+        {
+            Vector3 newCameraPosition = new Vector3(6.77f,//HOẶC (width - 1) * spacing / 2f
+                                                 mainCamera.transform.position.y,
+                                                 totalZOffset + (height - 1) * spacing / 2f);
+           StartCoroutine(MoveCameraSmoothly(newCameraPosition));
+        }
+
+        //4. Cho phép chọn kỹ năng lại
+        skillManager.EnableSelectSkill();
+
+        //5. Reset điểm số
+        scoreController.ResetScore();
+
+        //6. Reset kỹ năng của người chơi
+        playerMovement.playerSkill.ResetSkill();
+
+        //7.Bắt đầu hiển thị bẫy cho cấp độ hiện tại
+        showTrap.BeginShowTrap();
+    }
+
 
     void DestroyCurrentGrid()
     {

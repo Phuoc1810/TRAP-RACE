@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,28 @@ public class MenuManager : MonoBehaviour
     public GameObject optionsPanel;
     public GameObject settingPanel;
     public GameObject menuPanel;
+    public GameObject drawingCannvas;
+    public GameObject losePanel;
     public bool isInGame;
+
+    private void Awake()
+    {
+        // Safe singleton assignment
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Debug.LogWarning("Multiple MenuManager instances detected. Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        drawingCannvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -26,9 +44,22 @@ public class MenuManager : MonoBehaviour
         // start button disappear
         startButton.gameObject.SetActive(false);
 
-        TextMoving.instance.isInGame = true;
+        isInGame = true;
+        //TextMoving.instance.isInGame = true;
         TextMoving.instance.TextMove();
 
+        drawingCannvas.SetActive(true);
+
+    }
+
+    public void loseGame()
+    {
+        losePanel.SetActive(true);
+    }
+
+    public void ResetGame()
+    {
+        losePanel.SetActive(false);
     }
 
     public void BackToMenu()
@@ -40,8 +71,10 @@ public class MenuManager : MonoBehaviour
             startButton.gameObject.SetActive(true);
             TextMoving.instance.isInGame = false;
             TextMoving.instance.TextMove();
-        } else 
-            {
+            drawingCannvas.SetActive(false);
+        }
+        else
+        {
             Debug.Log("Not in game");
         }
     }
@@ -51,6 +84,7 @@ public class MenuManager : MonoBehaviour
         // open setting panel
         optionsPanel.SetActive(true);
         menuPanel.SetActive(false);
+
     }
 
     public void OptionsPanelClose()
@@ -70,5 +104,6 @@ public class MenuManager : MonoBehaviour
         settingPanel.SetActive(false);
         optionsPanel.SetActive(true);
     }
+
 }
    

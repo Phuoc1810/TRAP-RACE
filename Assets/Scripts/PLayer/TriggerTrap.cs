@@ -56,6 +56,15 @@ public class TriggerTrap : MonoBehaviour
     {
         animator.SetBool(isDeadHash, true);
         playerMovement.StopMovement();
+
         //hiển thị UI thua game
+        if (MenuManager.instance != null)
+        {
+            MenuManager.instance.loseGame();
+        }
+        else
+        {
+            Debug.LogWarning("TriggerTrap: MenuManager.Instance is null. Cannot call LoseGame().");
+        }
     }
 }

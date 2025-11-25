@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ShowTrap : MonoBehaviour
 {
+    public static ShowTrap Instance;
+
     public GridManager gridManager;
     public GameObject spikeTrapSprite;
     public GameObject HammerTrapSprite;
