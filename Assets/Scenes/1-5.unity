@@ -1198,6 +1198,14 @@ PrefabInstance:
       propertyPath: gridManager
       value: 
       objectReference: {fileID: 189976229}
+    - target: {fileID: 6132260339334829532, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570536675609032426, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

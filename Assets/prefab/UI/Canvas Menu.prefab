@@ -743,6 +743,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ShowTrap, Assembly-CSharp
+        m_MethodName: BeginShowTrap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2656329455719402464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,7 +1931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202cf8aea1e4490428ac687315d96295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementDuration: 0.8
+  movementDuration: 0.3
   targetPosition: {fileID: 4872120551474321006}
   startPosition: {fileID: 936895234410348584}
   isInGame: 0
@@ -2457,4 +2469,6 @@ MonoBehaviour:
   optionsPanel: {fileID: 362549145785457358}
   settingPanel: {fileID: 5972529091369795207}
   menuPanel: {fileID: 4892049518426840423}
+  drawingCannvas: {fileID: 0}
+  losePanel: {fileID: 0}
   isInGame: 0
