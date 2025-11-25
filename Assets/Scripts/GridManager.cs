@@ -44,6 +44,7 @@ public class GridManager : MonoBehaviour
     private float totalZOffset = 0f;
     public SkillManager skillManager;
     public ScoreController scoreController;
+    public ShowTrap showTrap;
 
     [Header("UI")]
     public GameObject winPanel;
@@ -302,6 +303,8 @@ public class GridManager : MonoBehaviour
     {
         //0. Tăng LEVEL, nếu level tiếp theo cần đổi scene thì đổi scene
         LevelManager.Instance.LoadNextLevel();
+        // Cập nhật UI hiển thị level hiện tại
+
 
         // 1. LẤY VỊ TRÍ NEO MỚI TỪ EXIT POINT CŨ
         GameObject oldExit = GameObject.FindGameObjectWithTag("ExitPoint");
@@ -349,6 +352,9 @@ public class GridManager : MonoBehaviour
 
         //7. Reset kỹ năng của người chơi
         playerMovement.playerSkill.ResetSkill();
+
+        //8.Bắt đầu hiển thị bẫy cho cấp độ mới
+        showTrap.BeginShowTrap();
     }
 
 
@@ -368,7 +374,7 @@ public class GridManager : MonoBehaviour
 
     IEnumerator MoveCameraSmoothly(Vector3 targetCenter)
     {
-        float duration = 1.5f;
+        float duration = 1.0f;
         float elapsed = 0f;
         Vector3 startPosition = mainCamera.transform.position;
         targetCenter.y = startPosition.y;

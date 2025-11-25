@@ -9,9 +9,15 @@ public class WinManager : MonoBehaviour
     [SerializeField] private GameObject winUI;
 
     public void ContinueNextLevel()//Add to the button
-    { 
-        gridManager.StartNextLevel();
-
+    {
+        if (LevelManager.Instance.CheckIfLastLevel())// If it's the last level
+        {
+            //Call restart or main menu function
+        }
+        else
+        {
+            gridManager.StartNextLevel();
+        }
         //Ẩn UI win
         winUI.SetActive(false);
     }

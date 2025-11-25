@@ -44,4 +44,9 @@ public class LevelManager : MonoBehaviour
             Debug.Log("No more levels to load.");
         }
     }
+
+    public bool CheckIfLastLevel()
+    {
+        return currentLevelIndex >= levels.Count - 1;
+    }
 }
