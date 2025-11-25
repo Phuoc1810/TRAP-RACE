@@ -4,5 +4,9 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/chuyenMobile.unity
+    guid: e1004d6543aa0a14caa5be5a63d3a294
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
