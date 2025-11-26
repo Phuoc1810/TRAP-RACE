@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PathDrawer : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class PathDrawer : MonoBehaviour
     public PlayerMovement player; // Tham chiếu đến script PlayerMovement
     public GridManager gridManager;
     private Camera mainCamera;
+    // mobile
+    [Header("UI Buttons")]
+    public Button moveButton;
+    public Button resetButton;
+    public GameObject movePanel;
 
     // === THAY ĐỔI ===
     // 'currentPath' là đường đang VẼ (trong khi giữ chuột)
@@ -30,6 +36,16 @@ public class PathDrawer : MonoBehaviour
         mainCamera = Camera.main;
         //titleText.SetActiveText(false);
         //DisableDrawing();
+        if (moveButton != null)
+        {
+            moveButton.onClick.AddListener(OnMoveButtonClicked);
+        }
+        if (resetButton != null)
+        {
+            resetButton.onClick.AddListener(OnResetButtonClicked);
+        }
+        if (movePanel != null)
+            movePanel.SetActive(false);
     }
 
     void Update()
@@ -66,6 +82,20 @@ public class PathDrawer : MonoBehaviour
         }
         // === KẾT THÚC THAY ĐỔI ===
     }
+    // hm xu ly khi bam nut
+    void OnMoveButtonClicked()
+    {
+        ValidateAndMovePlayer(currentPath);
+    }
+    //ham xu ly resset o khu nhan nut button
+    void OnResetButtonClicked()
+    {
+        ResetConfirmedPath();
+        if (movePanel != null)
+            movePanel.SetActive(false);
+        Debug.Log("Đã xóa đường đi bằng nút Reset.");
+    }
+
 
     void StartDrawing(TileInfo tile)
     {
@@ -117,6 +147,11 @@ public class PathDrawer : MonoBehaviour
         if (confirmedPath.Count > 0)
         {
             Debug.Log($"Đã xác nhận đường đi! Gồm {confirmedPath.Count} ô. Nhấn E để di chuyển.");
+        }
+        // ✨ HIỆN PANEL CHO NGƯỜI CHƠI
+        if (movePanel != null)
+        {
+            movePanel.SetActive(true);
         }
     }
 
@@ -261,18 +296,18 @@ public class PathDrawer : MonoBehaviour
         //PlayerMovement player = FindObjectOfType<PlayerMovement>();
         if (player != null)
         {
-            player.FollowPath(new List<TileInfo>(confirmedPath)); // Gọi hàm di chuyển Player
 
+            player.FollowPath(new List<TileInfo>(confirmedPath)); // Gọi hàm di chuyển Player
+                                                                  // ẨN PANEL
+            if (movePanel != null)
+                movePanel.SetActive(false);
             // Sau khi di chuyển, tắt khả năng vẽ đường đi  
             StartCoroutine(DisableDrawing());
         }
-
-        //Thong bao cho GamePhaseManager
-        GamePhaseManager.Instance.CompleteDraw();
     }
 
     public void EnableDrawing()
-    { 
+    {
         titleText.SetActiveText(true);
         titleText.SetScaleText(new Vector3(0.5f, 0.5f, 0.5f));
         titleText.StartCoroutine(titleText.ScaleText(Vector3.one));
