@@ -1858,7 +1858,7 @@ PrefabInstance:
       objectReference: {fileID: 21249703}
     - target: {fileID: 8963688928269774916, guid: 63d2902e4235ccf4781548f50c093e87, type: 3}
       propertyPath: enableDrawing
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2069,18 +2069,6 @@ PrefabInstance:
     - target: {fileID: 3818963539552542683, guid: edd8cef74d81333408167a6c1aa70215, type: 3}
       propertyPath: m_Name
       value: DrawingCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 3818963539552542683, guid: edd8cef74d81333408167a6c1aa70215, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4788266217872074884, guid: edd8cef74d81333408167a6c1aa70215, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -391
-      objectReference: {fileID: 0}
-    - target: {fileID: 7548630941425515311, guid: edd8cef74d81333408167a6c1aa70215, type: 3}
-      propertyPath: m_Name
-      value: Time
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
