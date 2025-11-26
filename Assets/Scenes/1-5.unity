@@ -773,18 +773,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas Menu
       objectReference: {fileID: 0}
-    - target: {fileID: 8597155459983587266, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
-      propertyPath: m_Color.b
-      value: 0.109255925
-      objectReference: {fileID: 0}
-    - target: {fileID: 8597155459983587266, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
-      propertyPath: m_Color.g
-      value: 0.109255925
-      objectReference: {fileID: 0}
-    - target: {fileID: 8597155459983587266, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
-      propertyPath: m_Color.r
-      value: 0.11698109
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1389,10 +1377,6 @@ PrefabInstance:
     - target: {fileID: 8400256793355003340, guid: 10c469254b0c994478e34e63167a8ad3, type: 3}
       propertyPath: m_Name
       value: CanvasYesAndNo
-      objectReference: {fileID: 0}
-    - target: {fileID: 8400256793355003340, guid: 10c469254b0c994478e34e63167a8ad3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
