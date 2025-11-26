@@ -360,7 +360,8 @@ public class GridManager : MonoBehaviour
     public void ResetLevel()
     {
         // 1. LẤY VỊ TRÍ BAN ĐẦU VÀ TRẢ NHÂN VẬT VỀ ĐÓ
-        Vector3 startPosition = new Vector3(0, 0.5f, totalZOffset); // Giả sử Start luôn ở (0,0) với offset Z hiện tại
+        GameObject usedStartPoint = GameObject.FindGameObjectWithTag("UsedStartPoint");
+        Vector3 startPosition = new Vector3(usedStartPoint.transform.position.x, usedStartPoint.transform.position.y + 0.5f, usedStartPoint.transform.position.z); // Giả sử Start luôn ở (0,0) với offset Z hiện tại
         playerMovement.transform.position = startPosition;
 
         // 2. PHÁ HỦY MAP HIỆN TẠI VÀ TẠO LẠI
@@ -394,9 +395,14 @@ public class GridManager : MonoBehaviour
         showTrap.BeginShowTrap();
 
         //8. Reset trạng thái của người chơi
+        PlayerMovement.instance.ResetPlayer();
 
         //9. Reset lại bẫy
-
+        GameObject[] allTraps = GameObject.FindGameObjectsWithTag("BayDa");
+        foreach (GameObject trap in allTraps)
+        {
+            Destroy(trap);
+        }
     }
 
 

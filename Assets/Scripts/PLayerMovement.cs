@@ -6,6 +6,26 @@ using System;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement instance;
+
+    private void Awake()
+    {
+        // Safe singleton assignment
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Debug.LogWarning("Multiple PlayerMovement instances detected. Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+    }
+
+
+
+
     public float PlayerYOffset=0.5f;
     [Tooltip("Tốc độ di chuyển của player")]
     public float moveSpeed = 5f;
@@ -320,4 +340,14 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetBool(isMovingHash, false); // Cập nhật tham số Speed cho Animator
     }
     
+
+    public void ResetPlayer()
+    {
+        StopMovement();
+        path.Clear();
+        currentPathIndex = 0;
+
+        // Đặt lại animation
+        playerAnimator.SetBool(isMovingHash, false);
+    }
 }
