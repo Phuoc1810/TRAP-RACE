@@ -692,6 +692,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
+--- !u!114 &944635924 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6517444062596386910, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
+  m_PrefabInstance: {fileID: 944635923}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3174ad743131db4c85df1a3a1ae53d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,6 +999,22 @@ PrefabInstance:
     - target: {fileID: 845235602564848549, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
       propertyPath: m_Name
       value: Canvas GameOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 2399740711329808289, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 189976229}
+    - target: {fileID: 2399740711329808289, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 944635924}
+    - target: {fileID: 2399740711329808289, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2399740711329808289, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetGame
       objectReference: {fileID: 0}
     - target: {fileID: 3476550514066230363, guid: 8cf8eae6e333ebc4cb0fc6ced2b9dc3b, type: 3}
       propertyPath: gridManager
@@ -1847,6 +1874,10 @@ PrefabInstance:
     - target: {fileID: 3818963539552542683, guid: edd8cef74d81333408167a6c1aa70215, type: 3}
       propertyPath: m_Name
       value: DrawingCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7548630941425515311, guid: edd8cef74d81333408167a6c1aa70215, type: 3}
+      propertyPath: m_Name
+      value: Time
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
