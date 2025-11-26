@@ -1874,8 +1874,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 41.7896, y: 0}
-  m_SizeDelta: {x: 403.5652, y: 149.666}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0}
+  m_SizeDelta: {x: 591.5048, y: 149.666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5417237865672855002
 CanvasRenderer:
@@ -1907,10 +1907,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: f0d1d00ff90085348817ce2d3a9d5067, type: 3}
-    m_FontSize: 114
+    m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2469,6 +2469,8 @@ MonoBehaviour:
   optionsPanel: {fileID: 362549145785457358}
   settingPanel: {fileID: 5972529091369795207}
   menuPanel: {fileID: 4892049518426840423}
+  levelText: {fileID: 8597155459983587266}
   drawingCannvas: {fileID: 0}
   losePanel: {fileID: 0}
   isInGame: 0
+  showTrap: {fileID: 0}

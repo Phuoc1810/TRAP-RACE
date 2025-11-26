@@ -18,6 +18,7 @@ public class WinManager : MonoBehaviour
         else
         {
             gridManager.StartNextLevel();
+            MenuManager.instance.SetLevelText();
         }
         //Ẩn UI win
         winUI.SetActive(false);
