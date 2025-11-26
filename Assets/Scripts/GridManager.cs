@@ -387,6 +387,9 @@ public class GridManager : MonoBehaviour
         //6. Reset kỹ năng của người chơi
         playerMovement.playerSkill.ResetSkill();
 
+        //Reset animation nhân vật
+        playerMovement.playerAnimator.SetBool("isDead", false);
+
         //7.Bắt đầu hiển thị bẫy cho cấp độ hiện tại
         showTrap.BeginShowTrap();
 

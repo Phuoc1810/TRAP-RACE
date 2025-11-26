@@ -9,9 +9,13 @@ public class MenuManager : MonoBehaviour
     public GameObject optionsPanel;
     public GameObject settingPanel;
     public GameObject menuPanel;
+    public Text levelText;
     public GameObject drawingCannvas;
     public GameObject losePanel;
     public bool isInGame;
+
+    [Header("References")]
+    public ShowTrap showTrap;
 
     private void Awake()
     {
@@ -31,6 +35,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         drawingCannvas.SetActive(false);
+        SetLevelText();
     }
 
     // Update is called once per frame
@@ -49,6 +54,7 @@ public class MenuManager : MonoBehaviour
         TextMoving.instance.TextMove();
 
         drawingCannvas.SetActive(true);
+        showTrap.BeginShowTrap();
 
     }
 
@@ -105,5 +111,9 @@ public class MenuManager : MonoBehaviour
         optionsPanel.SetActive(true);
     }
 
+    public void SetLevelText()
+    {
+        levelText.text = "Level " + (LevelManager.Instance.currentLevel).ToString();
+    }
 }
    
