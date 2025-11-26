@@ -13,10 +13,12 @@ public class WinManager : MonoBehaviour
         if (LevelManager.Instance.CheckIfLastLevel())// If it's the last level
         {
             //Call restart or main menu function
+            gridManager.ResetLevel();
         }
         else
         {
             gridManager.StartNextLevel();
+            MenuManager.instance.SetLevelText();
         }
         //Ẩn UI win
         winUI.SetActive(false);
