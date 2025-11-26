@@ -303,6 +303,8 @@ public class PathDrawer : MonoBehaviour
                 movePanel.SetActive(false);
             // Sau khi di chuyển, tắt khả năng vẽ đường đi  
             StartCoroutine(DisableDrawing());
+
+            GamePhaseManager.Instance.CompleteDraw();
         }
     }
 
