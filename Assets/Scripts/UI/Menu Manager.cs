@@ -13,6 +13,9 @@ public class MenuManager : MonoBehaviour
     public GameObject losePanel;
     public bool isInGame;
 
+    [Header("References")]
+    public ShowTrap showTrap;
+
     private void Awake()
     {
         // Safe singleton assignment
@@ -49,6 +52,7 @@ public class MenuManager : MonoBehaviour
         TextMoving.instance.TextMove();
 
         drawingCannvas.SetActive(true);
+        showTrap.BeginShowTrap();
 
     }
 
