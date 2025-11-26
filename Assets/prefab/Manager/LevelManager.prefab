@@ -76,37 +76,37 @@ MonoBehaviour:
     trapTypes:
     - SpikeTrap
     showTrapTime: 5
-    sceneNameOfNextLevel: 6-10
+    sceneNameOfNextLevel: 
   - levelNumber: 6
-    trapCount: 2
+    trapCount: 3
     trapTypes:
     - RockTrap
     - HammerTrap
     showTrapTime: 5
-    sceneNameOfNextLevel: 
+    sceneNameOfNextLevel: 6-10
   - levelNumber: 7
-    trapCount: 2
+    trapCount: 3
     trapTypes:
     - SpikeTrap
     - HammerTrap
     showTrapTime: 5
     sceneNameOfNextLevel: 
-  - levelNumber: 4
-    trapCount: 2
+  - levelNumber: 8
+    trapCount: 4
     trapTypes:
     - SpikeTrap
     - RockTrap
     showTrapTime: 5
     sceneNameOfNextLevel: 
-  - levelNumber: 4
-    trapCount: 2
+  - levelNumber: 9
+    trapCount: 4
     trapTypes:
     - HammerTrap
     - RockTrap
     showTrapTime: 5
     sceneNameOfNextLevel: 
-  - levelNumber: 4
-    trapCount: 2
+  - levelNumber: 10
+    trapCount: 5
     trapTypes:
     - SpikeTrap
     - HammerTrap

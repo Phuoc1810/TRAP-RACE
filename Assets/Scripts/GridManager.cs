@@ -25,7 +25,7 @@ public class GridManager : MonoBehaviour
     public GameObject[,] gridArray;
     private List<Vector3> spawnPositions;
     [Header("Trap Settings")]
-    public GameObject trapPrefab;   // Prefab cho cái bẫy
+    public GameObject[] trapPrefabs;    // Prefab cho cái bẫy
     public int numberOfTraps = 2;  // Số lượng bẫy cần spawn
     public float trapYOffset = 0.5f; // Độ cao Y để bẫy không bị lún
     public List<Vector2Int> trapPositions = new List<Vector2Int>();
@@ -43,6 +43,8 @@ public class GridManager : MonoBehaviour
     public PlayerMovement playerMovement;
     private float totalZOffset = 0f;
     public SkillManager skillManager;
+    public ScoreController scoreController;
+    public ShowTrap showTrap;
 
     [Header("UI")]
     public GameObject winPanel;
@@ -57,7 +59,7 @@ public class GridManager : MonoBehaviour
         goalCoordinates.y = height - 1;
 
         // Đảm bảo số bẫy không vượt quá số ô trống
-        numberOfTraps = Mathf.Min(numberOfTraps, (width * height) - 1);
+        numberOfTraps = Mathf.Min(LevelManager.Instance.levels[LevelManager.Instance.currentLevelIndex].trapCount, (width * height) - 1);
 
         // 2. KHỞI TẠO VÀ SPAWN LƯỚI
         gridArray = new GameObject[width, height];
@@ -180,20 +182,16 @@ public class GridManager : MonoBehaviour
     /// </summary>
     void SpawnRandomTraps()
     {
-        if (trapPrefab == null || numberOfTraps == 0)
-        {
-            Debug.LogWarning("Chưa gán 'Trap Prefab', bỏ qua spawn bẫy.");
-            return;
-        }
+        if (trapPrefabs == null || trapPrefabs.Length == 0 || numberOfTraps <= 0) return;
 
-        // 1. Tạo danh sách các VỊ TRÍ CÓ THỂ ĐẶT BẪY (Chỉ loại trừ Goal)
+        // 1. Lấy danh sách vị trí khả dụng (trừ Start và Finish)
         List<Vector2Int> spawnableLocations = new List<Vector2Int>();
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
             {
-                // Bỏ qua nếu là ô Goal
-                if (x == goalCoordinates.x && z == goalCoordinates.y) continue;
+                if (x == 0 && z == 0) continue; // Tránh Start
+                if (x == width - 1 && z == height - 1) continue; // Tránh ô cuối (trước FinishLine)
 
                 spawnableLocations.Add(new Vector2Int(x, z));
             }
@@ -202,125 +200,112 @@ public class GridManager : MonoBehaviour
         int trapsToSpawn = Mathf.Min(numberOfTraps, spawnableLocations.Count);
         if (trapsToSpawn <= 0) return;
 
-        // 2. Vòng lặp "thử" đặt bẫy và kiểm tra tính liên kết
+        // 2. Thử tìm vị trí đặt bẫy hợp lệ (không chặn đường)
         List<Vector2Int> chosenTrapLocations = new List<Vector2Int>();
-        int maxTries = 100; // Số lần thử tối đa để tránh vòng lặp vô hạn
-        bool foundValidPlacement = false;
+        int maxTries = 100;
+        bool foundValid = false;
 
         for (int tryCount = 0; tryCount < maxTries; tryCount++)
         {
             chosenTrapLocations.Clear();
             List<Vector2Int> tempList = new List<Vector2Int>(spawnableLocations);
 
-            // Chọn ngẫu nhiên N vị trí
+            // Chọn ngẫu nhiên N vị trí từ tempList
             for (int i = 0; i < trapsToSpawn; i++)
             {
                 if (tempList.Count == 0) break;
-                int randomIndex = Random.Range(0, tempList.Count);
-                chosenTrapLocations.Add(tempList[randomIndex]);
-                tempList.RemoveAt(randomIndex);
+                int r = Random.Range(0, tempList.Count);
+                chosenTrapLocations.Add(tempList[r]);
+                tempList.RemoveAt(r);
             }
 
-            // KIỂM TRA TÍNH LIÊN KẾT (Bước Pathfinding): 
-            // Bắt đầu kiểm tra từ ô đích.
-            if (IsFullyConnected(goalCoordinates, chosenTrapLocations))
+            // Kiểm tra đường đi từ (0,0) đến (W-1, H-1)
+            if (IsFullyConnected(new Vector2Int(0, 0), new Vector2Int(width - 1, height - 1), chosenTrapLocations))
             {
-                foundValidPlacement = true;
+                foundValid = true;
                 break;
             }
         }
-        for (int i = 0; i < numberOfTraps && spawnableLocations.Count > 0; i++)
+
+        // 3. Spawn bẫy nếu hợp lệ
+        if (foundValid)
         {
-            int randomIndex = Random.Range(0, spawnableLocations.Count);
-            Vector2Int coords = spawnableLocations[randomIndex];
+            trapPositions = new List<Vector2Int>(chosenTrapLocations);
 
-            // * TÍNH TỌA ĐỘ THẾ GIỚI MỚI VỚI totalZOffset *
-            Vector3 spawnPosition = new Vector3(
-                coords.x * spacing,
-                trapYOffset, // Chiều cao của bẫy
-                (coords.y * spacing) + totalZOffset // ÁP DỤNG totalZOffset
-            );
-            // 3. Spawn bẫy nếu tìm thấy vị trí hợp lệ
-            if (foundValidPlacement)
+            foreach (Vector2Int coords in chosenTrapLocations)
             {
-                Debug.Log($"Đã tìm thấy vị trí đặt bẫy hợp lệ. Đang spawn {trapsToSpawn} bẫy.");
-                trapPositions = new List<Vector2Int>(chosenTrapLocations);// Lưu lại vị trí bẫy đã chọn
-                foreach (Vector2Int pos in chosenTrapLocations)
+                // Tính toán vị trí thế giới (Có tính đến totalZOffset)
+                Vector3 spawnPosition = new Vector3(
+                    coords.x * spacing,
+                    trapYOffset,
+                    (coords.y * spacing) + totalZOffset // Dùng .y vì Vector2Int(x,z) lưu z vào y
+                );
+
+                // 🔥 Chọn ngẫu nhiên loại bẫy
+                GameObject randomTrap = trapPrefabs[Random.Range(0, trapPrefabs.Length)];
+
+                GameObject trapObj = Instantiate(randomTrap, spawnPosition, Quaternion.identity, transform);
+
+                // Gán làm con của Tile tương ứng để gọn (Tùy chọn)
+                if (gridArray[coords.x, coords.y] != null)
                 {
-                    GameObject tile = gridArray[pos.x, pos.y];
-                    Vector3 trapPosition = new Vector3(
-                        tile.transform.position.x,
-                        trapYOffset,
-                        tile.transform.position.z
-                    );
-
-                    GameObject newTrap = Instantiate(trapPrefab, trapPosition, Quaternion.identity);
-                    newTrap.name = $"Trap ({pos.x}, {pos.y})";
-                    newTrap.transform.SetParent(tile.transform);
+                    trapObj.transform.SetParent(gridArray[coords.x, coords.y].transform);
                 }
+
             }
-            else
-            {
-                Debug.LogWarning($"Không thể tìm vị trí đặt {trapsToSpawn} bẫy mà không chặn đường sau {maxTries} lần thử!");
-            }
+            Debug.Log($"Đã spawn {trapsToSpawn} bẫy.");
+        }
+        else
+        {
+            Debug.LogWarning("Không tìm được vị trí đặt bẫy hợp lệ.");
         }
     }
     /// <summary>
     /// Kiểm tra xem tất cả các ô không bẫy có kết nối thành một khối duy nhất (với ô đích) không.
     /// Nếu tất cả ô trống đều kết nối được với ô đích, bản đồ không bị chặn.
     /// </summary>
-   
-   
-    private bool IsFullyConnected(Vector2Int startNode, List<Vector2Int> trapPositions)
-    {
-        // Dùng HashSet để tra cứu bẫy nhanh hơn
-        HashSet<Vector2Int> traps = new HashSet<Vector2Int>(trapPositions);
-        
-        // Tính tổng số ô không bẫy
-        int totalNonTrapTiles = (width * height) - traps.Count;
-        if (totalNonTrapTiles <= 0) return true; 
 
+
+    bool IsFullyConnected(Vector2Int start, Vector2Int end, List<Vector2Int> obstacles)
+    {
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> obstacleSet = new HashSet<Vector2Int>(obstacles);
 
-        queue.Enqueue(startNode);
-        visited.Add(startNode);
-        
-        int reachableNonTrapTiles = 0;
+        queue.Enqueue(start);
+        visited.Add(start);
 
-        // Các hướng di chuyển Ngang, Dọc
-        int[] dX = { 0, 0, 1, -1 };
-        int[] dZ = { 1, -1, 0, 0 };
+        int[] dx = { 0, 0, 1, -1 };
+        int[] dy = { 1, -1, 0, 0 };
 
         while (queue.Count > 0)
         {
             Vector2Int current = queue.Dequeue();
-            reachableNonTrapTiles++;
+            if (current == end) return true;
 
-            // Kiểm tra 4 hướng
             for (int i = 0; i < 4; i++)
             {
-                Vector2Int neighbor = new Vector2Int(current.x + dX[i], current.y + dZ[i]);
+                Vector2Int neighbor = new Vector2Int(current.x + dx[i], current.y + dy[i]);
 
-                // 1. Kiểm tra biên
-                if (neighbor.x < 0 || neighbor.x >= width || neighbor.y < 0 || neighbor.y >= height) continue;
-
-                // 2. Kiểm tra bẫy
-                if (traps.Contains(neighbor)) continue;
-
-                // 3. Kiểm tra đã thăm
-                if (visited.Contains(neighbor)) continue;
-
-                visited.Add(neighbor);
-                queue.Enqueue(neighbor);
+                if (neighbor.x >= 0 && neighbor.x < width && neighbor.y >= 0 && neighbor.y < height)
+                {
+                    if (!visited.Contains(neighbor) && !obstacleSet.Contains(neighbor))
+                    {
+                        visited.Add(neighbor);
+                        queue.Enqueue(neighbor);
+                    }
+                }
             }
         }
-
-        // So sánh số ô có thể đến được với tổng số ô trống
-        return reachableNonTrapTiles == totalNonTrapTiles;
+        return false;
     }
     public void StartNextLevel()
     {
+        //0. Tăng LEVEL, nếu level tiếp theo cần đổi scene thì đổi scene
+        LevelManager.Instance.LoadNextLevel();
+        // Cập nhật UI hiển thị level hiện tại
+
+
         // 1. LẤY VỊ TRÍ NEO MỚI TỪ EXIT POINT CŨ
         GameObject oldExit = GameObject.FindGameObjectWithTag("ExitPoint");
 
@@ -352,7 +337,7 @@ public class GridManager : MonoBehaviour
         if (mainCamera != null)
         {
             // Tính toán tâm Z mới: Z_bắt đầu + nửa chiều dài map
-            Vector3 newCenter = new Vector3((width - 1) * spacing / 2f,
+            Vector3 newCenter = new Vector3(6.77f,//HOẶC (width - 1) * spacing / 2f
                                             mainCamera.transform.position.y,
                                             totalZOffset + (height - 1) * spacing / 2f);
 
@@ -362,8 +347,51 @@ public class GridManager : MonoBehaviour
         //5. Cho phép chọn kỹ năng lại
         skillManager.EnableSelectSkill();
 
+        //6. Reset điểm số
+        scoreController.ResetScore();
+
+        //7. Reset kỹ năng của người chơi
+        playerMovement.playerSkill.ResetSkill();
+
+        //8.Bắt đầu hiển thị bẫy cho cấp độ mới
+        showTrap.BeginShowTrap();
+    }
+
+    public void ResetLevel()
+    {
+        // 1. LẤY VỊ TRÍ BAN ĐẦU VÀ TRẢ NHÂN VẬT VỀ ĐÓ
+        Vector3 startPosition = new Vector3(0, 0.5f, totalZOffset); // Giả sử Start luôn ở (0,0) với offset Z hiện tại
+        playerMovement.transform.position = startPosition;
+
+        // 2. PHÁ HỦY MAP HIỆN TẠI VÀ TẠO LẠI
+        DestroyCurrentGrid();
+        gridArray = null;
+        spawnPositions.Clear();
+        Start(); // Gọi lại Start() để spawn grid mới ở vị trí totalZOffset
+
+        // 3. KÉO CAMERA VỀ VỊ TRÍ BAN ĐẦU
+        if (mainCamera != null)
+        {
+            Vector3 newCameraPosition = new Vector3(6.77f,//HOẶC (width - 1) * spacing / 2f
+                                                 mainCamera.transform.position.y,
+                                                 totalZOffset + (height - 1) * spacing / 2f);
+           StartCoroutine(MoveCameraSmoothly(newCameraPosition));
+        }
+
+        //4. Cho phép chọn kỹ năng lại
+        skillManager.EnableSelectSkill();
+
+        //5. Reset điểm số
+        scoreController.ResetScore();
+
         //6. Reset kỹ năng của người chơi
         playerMovement.playerSkill.ResetSkill();
+
+        //Reset animation nhân vật
+        playerMovement.playerAnimator.SetBool("isDead", false);
+
+        //7.Bắt đầu hiển thị bẫy cho cấp độ hiện tại
+        showTrap.BeginShowTrap();
     }
 
 
@@ -383,7 +411,7 @@ public class GridManager : MonoBehaviour
 
     IEnumerator MoveCameraSmoothly(Vector3 targetCenter)
     {
-        float duration = 1.5f;
+        float duration = 1.0f;
         float elapsed = 0f;
         Vector3 startPosition = mainCamera.transform.position;
         targetCenter.y = startPosition.y;

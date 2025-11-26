@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ShowTrap : MonoBehaviour
 {
+    public static ShowTrap Instance;
+
     public GridManager gridManager;
     public GameObject spikeTrapSprite;
     public GameObject HammerTrapSprite;
@@ -21,21 +23,22 @@ public class ShowTrap : MonoBehaviour
     [SerializeField] private PathDrawer pathDrawer;
     [SerializeField] private SkillManager skillManager;
 
+
     public GameObject ShowTrapAt(int x, int y)
     {
         GameObject trapPos = gridManager.gridArray[x, y];
         GameObject trapSprite = null;
         if (trapPos.transform.GetChild(0).TryGetComponent<HammerTrigger>(out HammerTrigger hammer))
         {
-            trapSprite = Instantiate(HammerTrapSprite, trapPos.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            trapSprite = Instantiate(HammerTrapSprite, trapPos.transform.position + new Vector3(0, 0.6f, 0), Quaternion.identity);
         }
         else if (trapPos.transform.GetChild(0).TryGetComponent<RockTrap>(out RockTrap rockTrap))
         {
-            trapSprite = Instantiate(RockTrapSprite, trapPos.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            trapSprite = Instantiate(RockTrapSprite, trapPos.transform.position + new Vector3(0, 0.6f, 0), Quaternion.identity);
         }
         else if (trapPos.transform.GetChild(0).TryGetComponent<SpikeTrap>(out SpikeTrap spikeTrap))
         {
-            trapSprite = Instantiate(spikeTrapSprite, trapPos.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            trapSprite = Instantiate(spikeTrapSprite, trapPos.transform.position + new Vector3(0, 0.6f, 0), Quaternion.identity);
         }
 
         trapSprite.transform.localScale = Vector3.zero;
@@ -45,7 +48,7 @@ public class ShowTrap : MonoBehaviour
     public void BeginShowTrap()
     {
         DisableController();
-        StartCoroutine(ShowAllTrap(5f));
+        StartCoroutine(ShowAllTrap(LevelManager.Instance.levels[LevelManager.Instance.currentLevelIndex].showTrapTime));
     }
 
     public IEnumerator ShowAllTrap(float countDownTime)
@@ -104,6 +107,23 @@ public class ShowTrap : MonoBehaviour
         foreach (GameObject trapSprite in trapSprites)
         {
             Destroy(trapSprite);
+        }
+
+        //Thông báo cho GamePhaseManager
+        if (skillManager != null && skillManager.SkillSelected == false)
+        {
+            GamePhaseManager.Instance.CompleteShowTrap();
+        }
+        else
+        {
+            if (skillManager.RecordTrapActive == false)
+            {
+                GamePhaseManager.Instance.CompleteChooseSkill();
+            }
+            else
+            {
+                GamePhaseManager.Instance.CompleteRecordTrap();
+            }
         }
     }
 

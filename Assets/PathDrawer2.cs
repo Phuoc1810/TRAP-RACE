@@ -202,7 +202,7 @@ public class PathDrawer2 : MonoBehaviour
     void HandleTileClicked(TileInfo clickedTile)
     {
         // Lấy vị trí Player hiện tại
-       
+        Vector2Int tileCoords = clickedTile.GetCoords();
 
         // Tính khoảng cách từ ô được click đến Player
         float distanceToPlayer = Vector3.Distance(clickedTile.transform.position, player.transform.position);
@@ -213,14 +213,23 @@ public class PathDrawer2 : MonoBehaviour
         // 3. Hoặc là ô ngay cạnh Player (đơn giản nhất là check khoảng cách)
 
         // Logic linh hoạt nhất: Chỉ cần click vào ô GẦN Player (sai số < 1.5f)
-        if (distanceToPlayer < 1.5f)
+        if (tileCoords.y != (multiStageGridManager.height + 1))
         {
-            StartDrawing(clickedTile);
+            if (tileCoords.y != 0) // Hoặc tileCoords.z, tùy vào cách bạn thiết lập
+            {
+                Debug.Log("Không thể bắt đầu vẽ đường đi từ ô này. Phải bắt đầu từ hàng đầu tiên (Z=0).");
+                return; // Dừng lại, không cho phép vẽ
+            }
+        }
+        if (distanceToPlayer > 2f)
+        {
+            return;
         }
         else
         {
             Debug.Log("Hãy bắt đầu vẽ từ vị trí nhân vật đang đứng!");
         }
+        StartDrawing(clickedTile);
     }
     public void ValidateAndMovePlayer(List<TileInfo> drawnPath)
     {

@@ -29,9 +29,11 @@ public class SkillPanelUI : MonoBehaviour
 
     private bool isShowing = false;
     private bool canClickButtons = false;
+
+    public bool IsShowing => isShowing;
     private void Start()
     {
-        hiddenPos =new Vector2(0, -582);
+        hiddenPos =new Vector2(0, -482);
         shownPos = new Vector2(0, 0);
     }
     private void Update()
@@ -60,7 +62,8 @@ public class SkillPanelUI : MonoBehaviour
         {
             pathDrawer.EnableDrawing();
         }
-
+        //Thông báo cho GamePhaseManager
+        //GamePhaseManager.Instance.CompleteChooseSkill();
         //StartCoroutine(HideInfor());
     }
     private void ChangeAlphaValueForText()
