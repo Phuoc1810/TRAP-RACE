@@ -389,6 +389,11 @@ public class GridManager : MonoBehaviour
 
         //7.Bắt đầu hiển thị bẫy cho cấp độ hiện tại
         showTrap.BeginShowTrap();
+
+        //8. Reset trạng thái của người chơi
+
+        //9. Reset lại bẫy
+
     }
 
 
