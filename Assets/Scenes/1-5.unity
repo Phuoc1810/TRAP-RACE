@@ -757,6 +757,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4741777971176343007, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741777971176343007, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741777971176343007, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6517444062596386910, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
       propertyPath: showTrap
       value: 
@@ -772,6 +784,18 @@ PrefabInstance:
     - target: {fileID: 6826549210391089862, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
       propertyPath: m_Name
       value: Canvas Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437707153913759751, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437707153913759751, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437707153913759751, guid: 68dad8431e0cac04ba70285d0bd94e15, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
